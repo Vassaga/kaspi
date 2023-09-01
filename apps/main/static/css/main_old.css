@@ -1,8 +1,8 @@
 
 .ALL
 {
-
-    height: 900px;
+    border: 1px solid black;
+    height: 700px;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -15,10 +15,8 @@
 
 .head  
 {
-    width: 500px;
-    height: 90px;
-    position: fixed;
-    top: 0;
+    width: 100%;
+    height: 80px;
     background-color: rgb(255, 255, 255);
     display: flex; /* Используем flexbox внутри .head */
     justify-content: center; /* Центрирование по вертикали */
@@ -29,7 +27,7 @@
 .search
 {
     width: 95%;
-    height: 60px;
+    height: 50px;
     background-color: rgb(219, 218, 218);
     border-radius: 12px;
     position: relative;
@@ -43,6 +41,7 @@
     position: absolute;
     top: 30%;
     margin-left: 30px;
+    text-indent:30px;
 }
 
 .promotions
@@ -50,7 +49,7 @@
     width: 100%;
     height: 180px;
     background-color: rgb(255, 255, 255);
-    margin-top: 90px;
+    margin-top: 10px;
 }
 
 .apps
@@ -62,6 +61,8 @@
     box-sizing: border-box;
     flex-direction: column;
 }
+
+
 
 .app_stage
 {
@@ -75,7 +76,7 @@
 {
     width: 68px;
     height: 68px;
-
+    border: 1px solid rgb(219, 218, 218);
     display: inline-block;
     margin-left: 22px;
     margin-right: 22px;
@@ -92,27 +93,4 @@
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
     box-sizing: border-box;
-}
-
-.foot
-{
-    width: 500px;
-    height: 100px;
-    background-color: white;
-    display: inline-block;
-    position: fixed;
-    top: 600px;
-    left: auto;
-    right: auto;
-    flex-direction: row;
-
-}
-
-.foot_1
-{
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
 }
