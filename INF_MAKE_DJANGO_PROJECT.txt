@@ -1,0 +1,95 @@
+
+!!! обязательно вместо названия проекта указываем сеттингс и ставим точку!!!!
+
+
+
+C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT>mkdir my_azino
+
+C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT>cd my_azino
+
+C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino>py -m venv env
+
+env activate
+env code .
+
+(env) C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino>django-admin startproject settings .
+
+settings.py -> base.py (переименовываем)
+
+в файле манадже.пай исправляем сеттингс.сеттингс в сеттингс.байзе
+в asgi.py тоже самое
+
+создаем папку apps на одном уровне с settings
+
+!!! потом из папки APPS создаем приложения !!!
+
+(env) C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino\apps>python ../manage.py startapp randoms
+
+(env) C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino\apps>python ../manage.py startapp auths
+
+
+--------------------------------------------------------------------
+in base.py:
+------------------------------------------------------------------
+from pathlib import Path
+import sys
+import os
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR / 'apps'))
+------------------------------------------------------------------
+
+(env) C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino\app>python ../manage.py startapp randoms
+
+(env) C:\Users\ЛомовВ\Documents\django-222\NEW_PROJECT\my_azino\app>python ../manage.py startapp auths
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+in urls.py:
+--------------------------------------------------------------------
+''' MAIN URLS'''
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("randoms.urls")),
+    path("", include("auths.urls"))
+
+]
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+создаем по urls.py в каждом app:
+--------------------------------------------------------------------
+''' name_app URLS'''
+
+
+from django.contrib import admin
+from django.urls import path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+in BASE.py:
+--------------------------------------------------------------------
+DJANGO_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+PROJECT_APPS = [
+    'auths.apps.AuthsConfig',
+    'randoms.apps.RandomsConfig'
+]
+
+INSTALLED_APPS = PROJECT_APPS + DJANGO_APPS
+--------------------------------------------------------------------
+
