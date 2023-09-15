@@ -11,9 +11,9 @@ class MyUserManager(BaseUserManager):
     """ClientManager."""
 
     @classmethod
-    def normalize_number(phone_number):
+    def normalize_number(self, phone_number):
         normalized_number = '7'+''.join(filter(str.isdigit, phone_number))
-        if len(normalized_number) != 10:
+        if len(normalized_number) != 11:
             raise ValidationError('неверный формат номера')
         else:
             return normalized_number
@@ -50,7 +50,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     number = models.CharField(
         verbose_name='номер телефона',
         unique=True,
-        max_length=10
+        max_length=11
     )
     fio = models.CharField(
         verbose_name='ФИО',
