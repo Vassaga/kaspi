@@ -17,9 +17,6 @@ from django.contrib import messages
 from auths.forms.register_form import RegisterForm
 from auths.models import MyUser
 
-# Create your views here.
-
-
 
 class RegisterView(View):
     """User Register"""
@@ -40,7 +37,9 @@ class RegisterView(View):
         form  = RegisterForm(request.POST)
         if form.is_valid():
             del form.cleaned_data['password2']
-            MyUser.objects.create(**form.cleaned_data)
+            number = form.cleaned_data['number']
+            password = form.cleaned_data['password']
+            MyUser.objects.create_user(number=number, password=password)
             messages.success(request, 'Регистрация прошла успешно!')
             return redirect('success/')
         return render(
