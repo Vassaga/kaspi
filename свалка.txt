@@ -1,0 +1,18 @@
+
+Метод normalize_number сейчас не используется нигде в вашем коде, и его использование не предусмотрено в вашем менеджере. Если вы хотите нормализовать номера перед сохранением, вы должны вызвать этот метод в методе create_user перед сохранением объекта. Например:
+========================================
+def create_user(self, number: str, password: str) -> 'MyUser':
+    if not number:
+        raise ValidationError('Number required')
+
+    normalized_number = self.normalize_number(number)
+
+    custom_user: 'MyUser' = self.model(
+        number=normalized_number,
+        password=password
+    )
+    custom_user.set_password(password)
+    custom_user.save(using=self._db)
+    return custom_user
+=====================================
+

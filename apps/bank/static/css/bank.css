@@ -1,7 +1,6 @@
 .ALL
 {
-    border: 1px solid black;
-    height: 700px;
+    height: 900px;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -14,13 +13,14 @@
 
 .head  
 {
-    width: 100%;
-    height: 80px;
+    width: 500px;
+    height: 85px;
+    position: fixed;
+    top: 0;
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
     flex-direction: row;
-
-   
+    
 }
 
 .back_point
@@ -28,7 +28,13 @@
     display: inline-block;
     height: 100%;
     width: 80px;
-    text-align: center;
+    background-image: url("/static/images/kaspi_backpoint_ico.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
 }
 
 .My_Bank
@@ -36,99 +42,109 @@
     display: inline-block;
     height: 100%;
     width: 414px;
-    box-sizing: border-box;
-    text-align: left;   /* текст влево */
-    text-indent:30px;  /* отступ текста в пикселях */
-    vertical-align: bottom; /* Выравниваем див после внесения текста */
-    
-}
-
-.chet_gold
-{
-    width: 100%;
-    height: 180px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 10px;
-    box-sizing: border-box;
-    flex-direction: row;
-}
-
-.chet_gold_icon
-{
-    display: inline-block;
-    height: 100%;
-    width: 80px;
-    text-indent:20px;  /* отступ текста в пикселях */
+    background-image: url("/static/images/MyBankHead.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
 }
 
 .chet_gold_info
 {
-    display: inline-block;
-    height: 100%;
-    width: 414px;
+    width: 100%;
+    height: 230px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 85px;
     box-sizing: border-box;
-    text-align: left;   /* текст влево */
-    text-indent:30px;  /* отступ текста в пикселях */
-    vertical-align: bottom; /* Выравниваем див после внесения текста */
+    flex-direction: column;
 }
 
-.chet_red  
+.chet_gold
 {
+    display: inline-block;
     width: 100%;
-    height: 80px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 10px;
-    box-sizing: border-box;
+    height: 120px;
     flex-direction: row;
 }
 
-.icon_point
+.ico_schet
 {
     display: inline-block;
-    height: 100%;
-    width: 80px;
-    text-align: left;
-    text-indent:20px;  /* отступ текста в пикселях */
+    width: 120px;
+    height: 120px;
 }
 
-.My_Red
+.schet
 {
     display: inline-block;
-    height: 100%;
-    width: 414px;
-    box-sizing: border-box;
-    text-align: left;   /* текст влево */
-    text-indent:30px;  /* отступ текста в пикселях */
+    width: 370px;
+    height: 120px;
     vertical-align: bottom; /* Выравниваем див после внесения текста */
-    
 }
 
+.chet_red_info { width: 100%; height: 110px; background-color: rgb(255, 255, 255); margin-top: 10px; box-sizing: border-box; flex-direction: column;}
+.chet_red { width: 100%; height: 100%; background-color: rgb(255, 255, 255); margin-top: 10px; box-sizing: border-box; flex-direction: row;}
+.ico_red { display: inline-block; width: 120px; height: 120px;}
+.red { display: inline-block; width: 375px; height: 120px; vertical-align: bottom; }
 
-.chet_deposit
-{
-    width: 100%;
-    height: 180px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 10px;
-    box-sizing: border-box;
-    flex-direction: row;
-}
 
-.chet_deposit_icon
-{
-    display: inline-block;
-    height: 100%;
-    width: 80px;
-    text-indent:20px;  /* отступ текста в пикселях */
-}
 
 .chet_deposit_info
 {
-    display: inline-block;
-    height: 100%;
-    width: 414px;
+    width: 100%;
+    height: 230px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
     box-sizing: border-box;
-    text-align: left;   /* текст влево */
-    text-indent:30px;  /* отступ текста в пикселях */
+    flex-direction: column;
+}
+
+.chet_deposit
+{
+    display: inline-block;
+    width: 100%;
+    height: 120px;
+    flex-direction: row;
+}
+
+.ico_deposit
+{
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+}
+
+.deposit
+{
+    display: inline-block;
+    width: 370px;
+    height: 120px;
     vertical-align: bottom; /* Выравниваем див после внесения текста */
+}
+
+
+
+.foot
+{
+    width: 500px;
+    height: 100px;
+    background-color: white;
+    display: inline-block;
+    position: fixed;
+    top: 650px;
+    left: auto;
+    right: auto;
+    flex-direction: row;
+
+}
+
+.foot_1
+{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
 }

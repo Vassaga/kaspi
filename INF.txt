@@ -1,0 +1,32 @@
+
+
+py -m venv env
+
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+сохр библиотеки и вываливаем
+pip freeze > bibls
+pip install -r bibls
+
+---------------------------------------------
+git clone ________________________________
+
+git status
+git add .
+git commit -m "_______________"
+git push origin main
+---------------------------------------------
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Vassaga/pj_mvc.git
+git push -u origin main
+Еor push an existing repository from the command line
+git remote add origin https://github.com/Vassaga/pj_mvc.git
+git branch -M main
+git push -u origin main
+----------------------------------------------

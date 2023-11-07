@@ -24,11 +24,14 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'rest_framework',
+    # 'rest_framework.authtoken',
 ]
 
 PROJECT_APPS = [
     'main.apps.MainConfig',
     'bank.apps.BankConfig',
+    'auths.apps.AuthsConfig',
 ]
 
 INSTALLED_APPS = PROJECT_APPS + DJANGO_APPS
@@ -103,3 +106,5 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'auths.MyUser'
