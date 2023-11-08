@@ -37,9 +37,10 @@ class RegisterView(View):
         form  = RegisterForm(request.POST)
         if form.is_valid():
             del form.cleaned_data['password2']
+            fio = form.cleaned_data['fio']
             number = form.cleaned_data['number']
             password = form.cleaned_data['password']
-            MyUser.objects.create_user(number=number, password=password)
+            MyUser.objects.create_user(number=number, fio=fio, password=password)
             messages.success(request, 'Регистрация прошла успешно!')
             return redirect('success/')
         return render(

@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models.query import QuerySet
+# from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
@@ -18,13 +18,14 @@ class MyUserManager(BaseUserManager):
         else:
             return normalized_number
 
-    def create_user(self, number: str, password: str) -> 'MyUser':
+    def create_user(self, number: str, fio: str, password: str) -> 'MyUser':
 
         if not number:
-            raise ValidationError('Number required')
+            raise ValidationError('Введите номер')
 
         custom_user: 'MyUser' = self.model(
             number=self.normalize_number(number),
+            fio=fio,
             password=password
         )
         custom_user.set_password(password)

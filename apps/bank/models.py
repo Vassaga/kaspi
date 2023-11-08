@@ -1,63 +1,67 @@
-# """MODELS BANK"""
+"""MODELS BANK"""
 
 # from django.core.exceptions import ValidationError
-# from django.db import models
+from django.db import models
 # from django.db.models.query import QuerySet
 # from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-# from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator
 
-# from auths.models import MyUser
-
-
-# class BankAccount(models.Model):
-#     # доработать
-
-#     class Currencies(models.TextChoices):
-#         TENGE = 'KZT', 'Tenge'
-#         RUBLI = 'RUB', 'Rubli'
-#         EURO = 'EUR', 'Euro'
-#         DOLLAR = 'USD', 'Dollar'
-
-#     class AccountType(models.TextChoices): # доработать
-#         ...
+from auths.models import MyUser
 
 
-#     iban = models.CharField(
-#         verbose_name='номер счета',
-#         max_length=20,
-#         validators=[
-#             RegexValidator(regex=r'^\d{16}$', message='Number не верный формат')
-#         ]
-#     )
+class BankAccount(models.Model):
 
-#     owner = models.OneToOneField(
-#         verbose_name='пользователь',
-#         related_name='счет',
-#         to=MyUser,
-#         on_delete=models.CASCADE
-#     )
+    """Bank Account"""
 
-#     balance = models.DecimalField(
-#         verbose_name='баланс счета',
-#         max_digits=10,  # Максимальное количество цифр
-#         decimal_places=2,  # Количество знаков после десятичной точки
-#     )
+    class Currencies(models.TextChoices):
+        TENGE = 'KZT', 'Tenge'
+        RUBLI = 'RUB', 'Rubli'
+        EURO = 'EUR', 'Euro'
+        DOLLAR = 'USD', 'Dollar'
 
-#     currency = models.CharField(
-#         verbose_name='валюта',
-#         max_length=4,
-#         choices=Currencies.choices,
-#         default=Currencies.TENGE
-#     )
+    class AccauntType(models.TextChoices):
+        GOLD = 'Gold', 'Kaspi Gold'
+        RED = 'Red', 'Kaspi Red'
+        DEP = 'Dep', 'Deposit'
 
-#     type = models.CharField(         # доработать
-#         ...
-#     )
+    iban = models.CharField(
+        verbose_name='номер счета',
+        max_length=20,
+        validators=[
+            RegexValidator(regex=r'^\d{16}$', message='Number не верный формат')
+        ]
+    )
 
-#     is_activ = models.BooleanField(
-#         default=False
-#     )
+    owner = models.OneToOneField(
+        verbose_name='пользователь',
+        related_name='счет',
+        to=MyUser,
+        on_delete=models.CASCADE
+    )
 
+    balance = models.DecimalField(
+        verbose_name='баланс счета',
+        max_digits=10,  
+        decimal_places=2,  
+    )
+
+    currency = models.CharField(
+        verbose_name='валюта',
+        max_length=4,
+        choices=Currencies.choices,
+        default=Currencies.TENGE
+    )
+
+    type = models.CharField(
+        verbose_name='тип счета',
+        max_length=4,
+        choices=AccauntType.choices,
+        default=AccauntType.GOLD
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
 
 
 

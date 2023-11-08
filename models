@@ -1,0 +1,11 @@
+
+
+account:
+
+number - iban
+user - owner
+balance
+currency
+type - ?
+status - is_active
+date_of_creation - ?
