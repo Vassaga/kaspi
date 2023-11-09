@@ -27,6 +27,7 @@ class BankAccount(models.Model):
     iban = models.CharField(
         verbose_name='номер счета',
         max_length=20,
+        unique=True,
         validators=[
             RegexValidator(regex=r'^\d{16}$', message='Number не верный формат')
         ]

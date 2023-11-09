@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaspi_AUTH</title>
+</head>
+<body>
+
+{% block content %}
+    <h2> Login </h2>
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Login"></p>
+    </form>
+{% endblock %}
+
+<hr>
+    {% if user.is_authenticated %}
+        Привет {{ user.fio }}!
+        <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+        <p>Вы не авторизованы</p>
+        <a href="{% url 'login' %}">ВОЙТИ</a>
+    {% endif %}
+<hr>
+
+</body>
+</html>

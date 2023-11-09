@@ -1,7 +1,7 @@
 ''' AUTHS URLS'''
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 
 from auths.views import RegisterView, RegistrationSuccessView
@@ -10,5 +10,6 @@ from auths.views import RegisterView, RegistrationSuccessView
 urlpatterns = [
     path('reg/success/', RegistrationSuccessView.as_view()),
     path('reg/', RegisterView.as_view()),
+    path("accounts/", include("django.contrib.auth.urls")),
     
 ]

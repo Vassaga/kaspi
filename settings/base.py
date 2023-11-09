@@ -105,6 +105,8 @@ STATIC_ROOT = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = 'media/'
 
+LOGIN_REDIRECT_URL  =  "/"
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'auths.MyUser'
