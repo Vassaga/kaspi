@@ -3,28 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/bank.css">
     <title>Kaspi_AUTH</title>
 </head>
 <body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <div class="chet_gold_info">
+            <div>
+                {% block content %}
+                    <h2> Login </h2>
+                    <form method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <p><input type="submit" value="ВОЙТИ"></p>
+                    </form>
+                {% endblock %}
+                <p><a href="/reg/">Регистрация</a></p>
+            </div>
+            <!-- <div>
+                {% if user.is_authenticated %}
+                    Привет {{ user.fio }}!
+                    <p><a href="{% url 'logout' %}">Log Out</a></p>
+                {% else %}
+                    <p>Вы не авторизованы</p>
+                    <a href="{% url 'login' %}">ВОЙТИ</a>
+                {% endif %}
+            </div> -->
+        </div>
+        <div class="foot">
+            <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
 
-{% block content %}
-    <h2> Login </h2>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Login"></p>
-    </form>
-{% endblock %}
 
-<hr>
-    {% if user.is_authenticated %}
-        Привет {{ user.fio }}!
-        <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% else %}
-        <p>Вы не авторизованы</p>
-        <a href="{% url 'login' %}">ВОЙТИ</a>
-    {% endif %}
-<hr>
 
 </body>
 </html>

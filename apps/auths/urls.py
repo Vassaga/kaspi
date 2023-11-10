@@ -10,6 +10,6 @@ from auths.views import RegisterView, RegistrationSuccessView
 urlpatterns = [
     path('reg/success/', RegistrationSuccessView.as_view()),
     path('reg/', RegisterView.as_view()),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("bank/", include("django.contrib.auth.urls")),
     
 ]

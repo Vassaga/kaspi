@@ -30,7 +30,6 @@ class RegisterView(View):
             template_name=self.template_name,
             context={
                 'form': form
-
             }
         )
 

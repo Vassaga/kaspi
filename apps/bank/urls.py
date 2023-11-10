@@ -4,8 +4,8 @@
 
 from django.urls import path
 
-from bank.views import bank_main_page
+from bank.views import BankMainPage
 
 urlpatterns = [
-    path('bank/', bank_main_page),
+    path('bank/', BankMainPage.as_view()),
 ]

@@ -1,0 +1,150 @@
+.ALL
+{
+    height: 900px;
+    width: 500px;
+    background-color: rgb(219, 218, 218);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+}
+
+.head  
+{
+    width: 500px;
+    height: 85px;
+    position: fixed;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    flex-direction: row;
+    
+}
+
+.back_point
+{
+    display: inline-block;
+    height: 100%;
+    width: 80px;
+    background-image: url("/static/images/kaspi_backpoint_ico.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.My_Bank
+{
+    display: inline-block;
+    height: 100%;
+    width: 414px;
+    background-image: url("/static/images/MyBankHead.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.chet_gold_info
+{
+    width: 100%;
+    height: 230px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 85px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+.chet_gold
+{
+    display: inline-block;
+    width: 100%;
+    height: 120px;
+    flex-direction: row;
+}
+
+.ico_schet
+{
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+}
+
+.schet
+{
+    display: inline-block;
+    width: 370px;
+    height: 120px;
+    vertical-align: bottom; /* Выравниваем див после внесения текста */
+}
+
+.chet_red_info { width: 100%; height: 110px; background-color: rgb(255, 255, 255); margin-top: 10px; box-sizing: border-box; flex-direction: column;}
+.chet_red { width: 100%; height: 100%; background-color: rgb(255, 255, 255); margin-top: 10px; box-sizing: border-box; flex-direction: row;}
+.ico_red { display: inline-block; width: 120px; height: 120px;}
+.red { display: inline-block; width: 375px; height: 120px; vertical-align: bottom; }
+
+
+
+.chet_deposit_info
+{
+    width: 100%;
+    height: 230px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+.chet_deposit
+{
+    display: inline-block;
+    width: 100%;
+    height: 120px;
+    flex-direction: row;
+}
+
+.ico_deposit
+{
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+}
+
+.deposit
+{
+    display: inline-block;
+    width: 370px;
+    height: 120px;
+    vertical-align: bottom; /* Выравниваем див после внесения текста */
+}
+
+
+
+.foot
+{
+    width: 500px;
+    height: 100px;
+    background-color: white;
+    display: inline-block;
+    position: fixed;
+    top: 650px;
+    left: auto;
+    right: auto;
+    flex-direction: row;
+
+}
+
+.foot_1
+{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}

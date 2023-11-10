@@ -12,20 +12,13 @@
             <a href="/"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
-
+        {% if user.is_authenticated %}
         <div class="chet_gold_info">
-            {% if user.is_authenticated %}
+            
             <div class="chet_gold">
                 <div class="ico_schet"><img src="/static/images/kaspi_card_small_ico.png"></div>
                 <div class="schet"><h2>Kaspi Gold {{ balance }} Т</h2></div>
-            </div>
-
-            {% else %}
-            <div class="chet_gold">
-                <div class="ico_schet"><img src="/static/images/kaspi_card_small_ico.png"></div>
-                <div class="schet"><h2>Kaspi Gold___________ XXXX Т</h2></div>
-            </div>
-            {% endif %}    
+            </div>   
             <div>
                 <div class="ico_schet"><img src="/static/images/kaspi_add_ico.png"></div>
                 <div class="schet"><h2>Оформить Kaspi Gold на ребенка</h2></div>
@@ -48,6 +41,9 @@
                 <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
                 <div class="deposit"><h2>Открыть Kaspi Депозит</h2></div>
             </div>
+        {% else %}
+        
+        {% endif %} 
         </div>
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
