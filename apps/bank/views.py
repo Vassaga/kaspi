@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from auths.models import MyUser
 from bank.models import BankAccount
 from bank.forms.create_bankaccount import BankAccountForm
+from bank.methods import IBAN_Generator
 
 
 class BankMainPage(View):
@@ -38,17 +39,25 @@ class CreateBankAccountView(View):
 
     def get(self, request, *args, **kwargs):
         form = BankAccountForm()
-        return render(request, self.template_name, {'form': form})
+        account_type = kwargs.get('account_type', None)
+        return render(request, self.template_name, {'form': form, 'account_type': account_type})
     
     def post(self, request, *args, **kwargs):
         form = BankAccountForm(request.POST)
         user = request.user
+        account_type = kwargs.get('account_type', None)
         if form.is_valid():
-            iban = form.cleaned_data['iban']
             balance = '0'
             currency = form.cleaned_data['currency']
-            type = BankAccount.AccauntType.GOLD
-            BankAccount.objects.create(iban=iban, owner=user, balance=balance, currency=currency, type=type)
+            if account_type == 'gold':
+                type = BankAccount.AccauntType.GOLD
+            elif account_type == 'red':
+                type = BankAccount.AccauntType.RED
+            elif account_type == 'dep':
+                type = BankAccount.AccauntType.DEP
+            else:
+                type = BankAccount.AccauntType.GOLD  # Значение по умолчанию
+            BankAccount.objects.create(owner=user, balance=balance, currency=currency, type=type)
             return redirect('/bank/')
         return render(request, self.template_name, {'form': form})
     

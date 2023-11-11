@@ -18,7 +18,7 @@
         
         <div class="chet_gold_info">
             <div>
-                <form action="/bank/create_account/" method="post">
+                <form method="post" action="{% url 'create_account' account_type %}">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="открыть счет">

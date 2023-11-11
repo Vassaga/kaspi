@@ -1,10 +1,10 @@
 """MODELS BANK"""
-
-# from django.core.exceptions import ValidationError
+import random
 from django.db import models
-# from django.db.models.query import QuerySet
-# from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import RegexValidator
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
 from auths.models import MyUser
 
@@ -64,7 +64,16 @@ class BankAccount(models.Model):
         default=True
     )
 
+@receiver(pre_save, sender=BankAccount)
+def generate_iban(sender, instance, **kwargs):
+    if not instance.iban:
+        # Генерация уникального 16-значного числа
+        generated_iban = ''.join([str(random.randint(0, 9)) for _ in range(16)])
+        # Проверка на уникальность в базе данных
+        while BankAccount.objects.filter(iban=generated_iban).exists():
+            generated_iban = ''.join([str(random.randint(0, 9)) for _ in range(16)])
 
+        instance.iban = generated_iban
 
 # class BankCard(models.Model):
 #     number = models.CharField(
