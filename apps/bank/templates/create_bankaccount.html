@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bank.css">
-    <title>Kaspi_REG</title>
+    <title>Открыть счет</title>
 </head>
 <body>
     <div class="ALL">
         <div class="head">
-            <a href="/"><div class="back_point"></div></a>
+            <a href="/bank/"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
+        <br>
+        <br>
+        <br>
+        
         <div class="chet_gold_info">
             <div>
-                <form action="/reg/" method="post">
+                <form action="/bank/create_account/" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="submit" value="Регистрация">
+                    <input type="submit" value="открыть счет">
                 </form>
-                <p><a href="/bank/login/">Войти</a></p>
             </div>
         </div>
+
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
@@ -29,9 +33,5 @@
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
         </div>    
     </div>
-</body>
-
-
-
 </body>
 </html>

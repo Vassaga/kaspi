@@ -9,5 +9,5 @@ from bank.models import (
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):
     list_display = ['iban', 'owner', 'balance', 'currency',  'type', 'is_active']
-    list_filter = ['currency',  'type', 'is_active']
+    list_filter = ['currency',  'type', 'is_active', 'owner']
     ordering = ['iban', 'owner', 'currency', 'type', 'is_active']

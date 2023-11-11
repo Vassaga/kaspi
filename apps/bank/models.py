@@ -33,7 +33,7 @@ class BankAccount(models.Model):
         ]
     )
 
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         verbose_name='пользователь',
         related_name='счет',
         to=MyUser,

@@ -8,18 +8,8 @@ from django.contrib.auth import authenticate, login
 
 from auths.models import MyUser
 from bank.models import BankAccount
+from bank.forms.create_bankaccount import BankAccountForm
 
-# def bank_main_page(request):
-#     user = request.user
-#     bank_account = BankAccount.objects.get(owner=user)
-#     return render(
-#         template_name='bank.html',
-#         request=request,
-#         context = {
-#             'user': user,
-#             'balance': bank_account.balance
-#         }
-#     )
 
 class BankMainPage(View):
     """Main page"""
@@ -27,16 +17,38 @@ class BankMainPage(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             user = request.user
-            bank_account = BankAccount.objects.get(owner=user)
+            Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
+            Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
+            Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
             return render(
                 template_name='bank.html',
                 request=request,
                 context = {
                     'user': user,
-                    'balance': bank_account.balance
+                    'Gold_accounts': Gold_accounts,
+                    'Dep_accounts' : Dep_accounts,
+                    'Red_accounts' : Red_accounts
                 }
             )
         else:
-            # user = request.user
-            # bank_account = BankAccount.objects.get(owner=user)
             return redirect('login/')
+
+class CreateBankAccountView(View):
+    template_name = 'create_bankaccount.html'
+
+    def get(self, request, *args, **kwargs):
+        form = BankAccountForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = BankAccountForm(request.POST)
+        user = request.user
+        if form.is_valid():
+            iban = form.cleaned_data['iban']
+            balance = '0'
+            currency = form.cleaned_data['currency']
+            type = BankAccount.AccauntType.GOLD
+            BankAccount.objects.create(iban=iban, owner=user, balance=balance, currency=currency, type=type)
+            return redirect('/bank/')
+        return render(request, self.template_name, {'form': form})
+    
