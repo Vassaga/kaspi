@@ -1,3 +1,14 @@
+=======================================================================================================================
+
+Также, убедитесь, что ваше поле inaccount в модели Transfer является необязательным (blank=True, null=True), чтобы не возникало ошибок при сохранении формы без выбора в поле inaccount. Например:
+
+class Transfer(models.Model):
+    outaccount = models.ForeignKey(BankAccount, on_delete=models.CASCADE, related_name='out_transfers')
+    inaccount = models.ForeignKey(BankAccount, on_delete=models.CASCADE, related_name='in_transfers', blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    # other fields...
+
+=======================================================================================================================
 
 Метод normalize_number сейчас не используется нигде в вашем коде, и его использование не предусмотрено в вашем менеджере. Если вы хотите нормализовать номера перед сохранением, вы должны вызвать этот метод в методе create_user перед сохранением объекта. Например:
 ========================================

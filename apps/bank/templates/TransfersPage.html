@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/TransfersPage.css">
+    <title>Переводы</title>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+        <div class="post_head">
+           
+            <h2>МОИ ПЕРЕВОДЫ | ИСТОРИЯ</h2>
+
+        </div>
+
+        <div class="div_info0">
+
+        </div>
+
+        <div class="div_info">
+            <div class="div1">
+                <a href="/transfers/self/"><div class="ico_schet"><img src="/static/images/kaspi_TransApp_ico.png"></div>
+                <div class="schet"><h2>Между своими счетами</h2></div>
+            </div></a>
+        </div>
+        <div class="div_info">
+            <div class="div1">
+                <div class="ico_schet"><img src="/static/images/kaspi_TransAnover_ico.png"></div>
+                <div class="schet"><h2>Клиенту каспи</h2></div>
+            </div>
+        </div>
+        <div class="div_info">
+            <div class="div1">
+                <div class="ico_schet"><img src="/static/images/kaspi_TransAnoverBank_ico.png"></div>
+                <div class="schet"><h2>Карта другого банка</h2></div>
+            </div>
+        </div>
+        <div class="div_info">
+            <div class="div1">
+                <div class="ico_schet"><img src="/static/images/kaspi_TransWorld_ico.png"></div>
+                <div class="schet"><h2>Международные переводы</h2></div>
+            </div>
+        </div>
+        {% else %}
+
+        <div class="div_info">
+            <div class="div1">
+                <h2>Вы не авторизованы</h2>
+                <p><a href="/bank/login/">Войти</a></p>
+            </div>
+        </div>
+
+
+        {% endif %} 
+        
+        <div class="foot">
+            <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>

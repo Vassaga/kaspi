@@ -1,0 +1,129 @@
+.ALL
+{
+    height: 900px;
+    width: 500px;
+    background-color: rgb(219, 218, 218);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+}
+
+.head  
+{
+    width: 500px;
+    height: 85px;
+    position: fixed;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    flex-direction: row;
+    
+}
+
+.back_point
+{
+    display: inline-block;
+    height: 100%;
+    width: 80px;
+    background-image: url("/static/images/kaspi_backpoint_ico.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.My_Bank
+{
+    display: inline-block;
+    height: 100%;
+    width: 414px;
+    background-image: url("/static/images/MyBankHead.png");
+    background-size: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.post_head
+{
+    width: 500px;
+    height: 60px;
+    position: fixed;
+    top: 86px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    flex-direction: row;
+}
+
+.div_info0
+{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 66px;
+    display: flex;
+    flex-direction: column;
+}
+
+.div_info
+{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.div1
+{
+    display: inline-block;
+    width: 100%;
+    height: 100px;
+    flex-direction: row;
+}
+
+
+.ico_schet
+{
+    display: inline-block;
+    width: 120px;
+    height: 100px;
+}
+
+.schet
+{
+    display: inline-block;
+    width: 370px;
+    height: 100px;
+    vertical-align: bottom;
+}
+
+.foot
+{
+    width: 500px;
+    height: 100px;
+    background-color: white;
+    display: inline-block;
+    position: fixed;
+    top: 650px;
+    left: auto;
+    right: auto;
+    flex-direction: row;
+
+}
+
+.foot_1
+{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}

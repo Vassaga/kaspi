@@ -4,10 +4,19 @@
 
 from django.urls import path
 
-from bank.views import BankMainPage, CreateBankAccountView
+from bank.views import (
+    BankMainPageView, 
+    CreateBankAccountView, 
+    TransfersPageView, 
+    TransferSelfBankAccountsView,
+    TransferSuccessView
+    )
 
 urlpatterns = [
-    path('bank/', BankMainPage.as_view()),
+    path('bank/', BankMainPageView.as_view()),
+    path('transfers/self/success/', TransferSuccessView.as_view()),
+    path('transfers/self/', TransferSelfBankAccountsView.as_view()),
+    path('transfers/', TransfersPageView.as_view()),
     # path('bank/create_account/', CreateBankAccountView.as_view(), name='create_account'),
     path('bank/create_account/<str:account_type>/', CreateBankAccountView.as_view(), name='create_account'),
 ]

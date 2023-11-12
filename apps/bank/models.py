@@ -22,7 +22,7 @@ class BankAccount(models.Model):
     class AccauntType(models.TextChoices):
         GOLD = 'Gold', 'Kaspi Gold'
         RED = 'Red', 'Kaspi Red'
-        DEP = 'Dep', 'Deposit'
+        DEP = 'Dep', 'Kaspi Deposit'
 
     iban = models.CharField(
         verbose_name='номер счета',
@@ -64,6 +64,9 @@ class BankAccount(models.Model):
         default=True
     )
 
+    def __str__(self):
+        return f"{self.get_type_display()} - {self.balance} {self.currency}"
+
 @receiver(pre_save, sender=BankAccount)
 def generate_iban(sender, instance, **kwargs):
     if not instance.iban:
@@ -74,6 +77,45 @@ def generate_iban(sender, instance, **kwargs):
             generated_iban = ''.join([str(random.randint(0, 9)) for _ in range(16)])
 
         instance.iban = generated_iban
+
+class Transfer(models.Model):
+    """Transfer Account"""
+    user = models.ForeignKey(
+        MyUser,
+        verbose_name='отправитель',
+        on_delete=models.CASCADE
+        )
+    outaccount = models.ForeignKey(
+        BankAccount,
+        verbose_name='исходящий счет',
+        on_delete=models.CASCADE,
+        related_name='out_transfers'
+    )
+    inaccount = models.ForeignKey(
+        BankAccount,
+        verbose_name='входящий счет',
+        on_delete=models.CASCADE,
+        related_name='in_transfers'
+    )
+
+    amount = models.DecimalField(
+        verbose_name='сумма',
+        max_digits=10,  
+        decimal_places=2,  
+    )
+
+    datetime = models.DateTimeField(
+        verbose_name='дата перевода',
+        auto_now_add=True
+        )
+
+    class Meta:
+        ordering = ('-pk',)
+        verbose_name = 'перевод'
+        verbose_name_plural = 'переводы'
+
+    def __str__(self):
+        return f"{self.datetime} {self.user.fio} перевел со счета {self.outaccount.type} на счет {self.inaccount.owner.fio} сумму ({self.amount} )"
 
 # class BankCard(models.Model):
 #     number = models.CharField(

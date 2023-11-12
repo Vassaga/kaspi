@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/bank.css">
-    <title>Мой банк</title>
+    <link rel="stylesheet" href="/static/css/TransfersPage.css">
+    <title>Переводы</title>
 </head>
 <body>
     <div class="ALL">
         <div class="head">
-            <a href="/"><div class="back_point"></div></a>
+            <a href="/transfers/"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+        <div class="post_head">
+           
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        
         </div>
+
+
+        {% endif %} 
+        
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
