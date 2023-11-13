@@ -105,7 +105,12 @@ class TransferSelfBankAccountsView(View):
                     inaccount_object.balance += amount
                     outaccount_object.save()  # Сохраняем изменения в базе данных
                     inaccount_object.save()
-                    Transfer.objects.create(user=user, amount=amount, outaccount=outaccount_object, inaccount=inaccount_object)
+                    Transfer.objects.create(
+                        amount=amount, 
+                        outaccount=outaccount_object, 
+                        inaccount=inaccount_object, 
+                        balance=outaccount_object.balance)
+                    print()
             except:
                 # Обработка исключений
                 pass

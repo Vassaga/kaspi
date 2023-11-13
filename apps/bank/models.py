@@ -5,6 +5,7 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 
 from auths.models import MyUser
 
@@ -67,6 +68,7 @@ class BankAccount(models.Model):
     def __str__(self):
         return f"{self.get_type_display()} - {self.balance} {self.currency}"
 
+
 @receiver(pre_save, sender=BankAccount)
 def generate_iban(sender, instance, **kwargs):
     if not instance.iban:
@@ -80,42 +82,61 @@ def generate_iban(sender, instance, **kwargs):
 
 class Transfer(models.Model):
     """Transfer Account"""
-    user = models.ForeignKey(
-        MyUser,
-        verbose_name='отправитель',
-        on_delete=models.CASCADE
-        )
+    class TransactionTypes(models.TextChoices):
+        DEPOSIT = 'Deposit', 'Deposit'
+        WITHDRAWAL = 'Withdrawal', 'Withdrawal'
+        TRANSFER = 'Transfer', 'Transfer'
+
+    # user = models.ForeignKey(
+    #     MyUser,
+    #     verbose_name='отправитель',
+    #     on_delete=models.CASCADE
+    #     )
     outaccount = models.ForeignKey(
         BankAccount,
-        verbose_name='исходящий счет',
+        verbose_name='счет-получатель',
         on_delete=models.CASCADE,
-        related_name='out_transfers'
+        related_name='sent_transfers'
     )
     inaccount = models.ForeignKey(
         BankAccount,
-        verbose_name='входящий счет',
+        verbose_name='счет-отправитель',
         on_delete=models.CASCADE,
-        related_name='in_transfers'
+        related_name='received_transfers'
     )
 
     amount = models.DecimalField(
         verbose_name='сумма',
         max_digits=10,  
-        decimal_places=2,  
+        decimal_places=2,
+        validators=[MinValueValidator(0)],  
+    )
+
+    balance = models.DecimalField(
+        verbose_name='остаток на счете',
+        max_digits=10,  
+        decimal_places=2,
+    )
+
+    transaction_type = models.CharField(
+        max_length=10,
+        choices=TransactionTypes.choices,
+        default=TransactionTypes.TRANSFER,
+        verbose_name='Тип транзакции',
     )
 
     datetime = models.DateTimeField(
         verbose_name='дата перевода',
         auto_now_add=True
         )
-
+    
     class Meta:
         ordering = ('-pk',)
         verbose_name = 'перевод'
         verbose_name_plural = 'переводы'
 
     def __str__(self):
-        return f"{self.datetime} {self.user.fio} перевел со счета {self.outaccount.type} на счет {self.inaccount.owner.fio} сумму ({self.amount} )"
+        return f"{self.datetime} со счета {self.outaccount.type} {self.outaccount.iban} пользователя {self.outaccount.owner.fio}  на счет пользователя {self.inaccount.owner.fio} {self.inaccount.iban} сумму ({self.amount})"
 
 # class BankCard(models.Model):
 #     number = models.CharField(
