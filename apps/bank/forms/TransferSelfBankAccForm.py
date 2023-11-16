@@ -35,14 +35,6 @@ class TransferSelfForm(forms.ModelForm):
             self.fields['outaccount'].queryset = BankAccount.objects.filter(owner=user)
             self.fields['inaccount'].queryset = BankAccount.objects.filter(owner=user)
 
-        # Если выбран счет списания, исключите его из возможных счетов для зачисления
-        outaccount = self.fields['outaccount'].widget.value_from_datadict(self.data, self.files, self.add_prefix('outaccount'))
-        if outaccount:
-            self.fields['inaccount'].queryset = self.fields['inaccount'].queryset.exclude(pk=outaccount)
-
-        # # Используйте кастомный виджет для outaccount
-        # self.fields['outaccount'].widget = BankAccountWidget()
-
     def clean(self):
         cleaned_data = super().clean()
         outaccount = cleaned_data.get('outaccount')

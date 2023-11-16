@@ -1,24 +1,29 @@
+
+''' BANK VIEWS '''
+
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-# Create your views here.
+from django.db.models import Q
 
 from auths.models import MyUser
 from bank.models import BankAccount, Transfer
 from bank.forms.create_bankaccount import BankAccountForm
 from bank.forms.TransferSelfBankAccForm import TransferSelfForm
-from bank.methods import IBAN_Generator
+from bank.currency_converter import currency_converter
 
 
 class BankMainPageView(View):
-    """Main page"""
+
+    """ ГЛАВНАЯ СТРАНИЦА БАНКА ПОЛЬЗОВАТЕЛЯ. """
 
     def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
-            user = request.user
+            user = request.user   # получаем авторизованного пользователя
+            # вытаскиваем типы счетов:
             Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
             Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
             Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
@@ -37,8 +42,18 @@ class BankMainPageView(View):
 
 class CreateBankAccountView(View):
 
-    """Create Bank Account page"""
+    """
+    СТРАННИЦА СОЗДАНИЯ СЧЕТА.
 
+        Параметры:
+        - account_type 
+        Извлекаем информацию о типе счета из параметров запроса
+        (данные о типе создаваемого счета сидят в ссылках на странице выбора создаваемого счета)
+
+        -  user = request.user:
+        Получаем авторизованного пользователя, что бы отображать (обрабатывать) именно его счета
+
+    """
     template_name = 'create_bankaccount.html'
 
     def get(self, request, *args, **kwargs):
@@ -47,7 +62,7 @@ class CreateBankAccountView(View):
         return render(request, self.template_name, {'form': form, 'account_type': account_type})
     
     def post(self, request, *args, **kwargs):
-        form = BankAccountForm(request.POST)
+        form = BankAccountForm(request.POST) 
         user = request.user
         account_type = kwargs.get('account_type', None)
         if form.is_valid():
@@ -60,14 +75,14 @@ class CreateBankAccountView(View):
             elif account_type == 'dep':
                 type = BankAccount.AccauntType.DEP
             else:
-                type = BankAccount.AccauntType.GOLD  # Значение по умолчанию
+                type = BankAccount.AccauntType.GOLD  # Значение по умолчанию - нужно ли нам это?
             BankAccount.objects.create(owner=user, balance=balance, currency=currency, type=type)
             return redirect('/bank/')
         return render(request, self.template_name, {'form': form})
     
 class TransfersPageView(View):
 
-    """Transfers page"""
+    """ СТРАННИЦА ПЕРЕВОДОВ. """
 
     template_name = 'TransfersPage.html'
 
@@ -77,7 +92,7 @@ class TransfersPageView(View):
 
 class TransferSelfBankAccountsView(View):
 
-    """Transfers page"""
+    """ СТРАННИЦА ПЕРЕВОДОВ МЕЖДУ СВОИМИ СЧЕТАМИ. """
 
     template_name = 'TransferSelfBankAccounts.html'
 
@@ -94,18 +109,24 @@ class TransferSelfBankAccountsView(View):
             outaccount_object = form.fields['outaccount'].queryset.get(pk=outaccount.pk)
             inaccount = form.cleaned_data['inaccount']
             inaccount_object = form.fields['inaccount'].queryset.get(pk=inaccount.pk)
-            
             try:
                 if outaccount_object.balance < amount:
                     messages.error(request, 'Недостаточно средств на счете списания.')
                     return redirect('success/')
                 else:
-                    # Обновляем баланс объекта outaccount
+                    inaccount_object.balance += currency_converter(float(amount), str(outaccount_object.currency), str(inaccount_object.currency))
                     outaccount_object.balance -= amount
-                    inaccount_object.balance += amount
                     outaccount_object.save()  # Сохраняем изменения в базе данных
-                    inaccount_object.save()
-                    Transfer.objects.create(user=user, amount=amount, outaccount=outaccount_object, inaccount=inaccount_object)
+                    inaccount_object.save()   # Сохраняем изменения в базе данных
+
+                    currency = inaccount_object.currency
+
+                    Transfer.objects.create(
+                        amount=amount, 
+                        outaccount=outaccount_object, 
+                        inaccount=inaccount_object,
+                        currency=currency,
+                        balance=outaccount_object.balance)
             except:
                 # Обработка исключений
                 pass
@@ -114,7 +135,34 @@ class TransferSelfBankAccountsView(View):
         return render(request, self.template_name, {'form': form})
 
 class TransferSuccessView(View):
+
+    """ СТРАННИЦА О СТАТУСЕ ПЕРЕВОДОВ МЕЖДУ СВОИМИ СЧЕТАМИ. """
+
     template_name = 'Transfer_done.html'
 
     def get(self, request):
         return render(request, self.template_name)
+    
+class TransfersHistoryView(View):
+
+    """ СТРАННИЦА ИСТОРИИ ПЕРЕВОДОВ. """
+
+    
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        if request.user.is_authenticated:
+            user = request.user   
+            # Transfers = Transfer.objects.filter(owner=user).order_by('owner')
+            # Transfers = Transfer.objects.filter(outaccount__owner=user, inaccount__owner=user)
+            Transfers = Transfer.objects.filter(Q(outaccount__owner=user) | Q(inaccount__owner=user))
+
+            return render(
+                template_name = 'Transfer_history.html',
+                request=request,
+                context = {
+                    'user': user,
+                    'Transfers': Transfers,
+                }
+            )
+        else:
+            return redirect('login/')

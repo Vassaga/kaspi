@@ -1,7 +1,5 @@
 ''' BANK URLS'''
 
-
-
 from django.urls import path
 
 from bank.views import (
@@ -9,14 +7,15 @@ from bank.views import (
     CreateBankAccountView, 
     TransfersPageView, 
     TransferSelfBankAccountsView,
-    TransferSuccessView
+    TransferSuccessView,
+    TransfersHistoryView
     )
 
 urlpatterns = [
-    path('bank/', BankMainPageView.as_view()),
     path('transfers/self/success/', TransferSuccessView.as_view()),
     path('transfers/self/', TransferSelfBankAccountsView.as_view()),
+    path('transfers/history/', TransfersHistoryView.as_view()),
     path('transfers/', TransfersPageView.as_view()),
-    # path('bank/create_account/', CreateBankAccountView.as_view(), name='create_account'),
     path('bank/create_account/<str:account_type>/', CreateBankAccountView.as_view(), name='create_account'),
+    path('bank/', BankMainPageView.as_view()),
 ]

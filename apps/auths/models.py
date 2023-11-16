@@ -1,4 +1,5 @@
-"""MODELS AUTHS"""
+
+''' MODELS AUTHS '''
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -8,7 +9,22 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 
 class MyUserManager(BaseUserManager):
-    """ClientManager."""
+
+    """ 
+    КЛИЕНТМЕНЕДЖЕР КАСТОМНОГО ПОЛЬЗОВАТЕЛЯ. 
+    
+    Параметры:
+
+    - normalize_number:
+    нормализатор номера (логин пользователя)
+
+    - create_user:
+    замена штатного метода create на свой метод create_user
+
+    - create_superuser:
+    создание своего метода создания своего суперпользователя
+    
+    """
 
     @classmethod
     def normalize_number(self, phone_number):
@@ -48,6 +64,8 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
 
+    """ МОДЕЛЬ КАСТОМНОГО ПОЛЬЗОВАТЕЛЯ. """
+
     number = models.CharField(
         verbose_name='номер телефона',
         unique=True,
@@ -77,7 +95,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         'auth.Group',
         verbose_name='Groups',
         blank=True,
-        related_name='customuser_set',  # Установите уникальное имя обратной связи для связи с группами
+        related_name='customuser_set',
         related_query_name='customuser'
     )
 
@@ -85,6 +103,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         'auth.Permission',
         verbose_name='User permissions',
         blank=True,
-        related_name='customuser_set',  # Установите уникальное имя обратной связи для связи с разрешениями пользователя
+        related_name='customuser_set',
         related_query_name='customuser'
     )

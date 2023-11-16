@@ -1,4 +1,6 @@
 
+''' AUTHS VIEWS '''
+
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http.request import HttpRequest
@@ -8,18 +10,13 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-# from rest_framework.authtoken.views import ObtainAuthToken
-# from rest_framework.authtoken.models import Token
-# from rest_framework.response import Response
-# from rest_framework import status
-# from rest_framework.views import APIView
-
 from auths.forms.register_form import RegisterForm
 from auths.models import MyUser
 
 
 class RegisterView(View):
-    """User Register"""
+
+    """ СТРАНИЦА РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ. """
 
     template_name = 'register.html'
 
