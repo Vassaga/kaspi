@@ -7,6 +7,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 
 from auths.models import MyUser
