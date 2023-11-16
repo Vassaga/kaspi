@@ -72,7 +72,6 @@ class BankAccount(models.Model):
     def __str__(self):
         return f"{self.get_type_display()} - {self.balance} {self.currency}"
 
-
 @receiver(pre_save, sender=BankAccount)
 def generate_iban(sender, instance, **kwargs):
     if not instance.iban:
@@ -87,32 +86,20 @@ def generate_iban(sender, instance, **kwargs):
 
 
 class Transfer(models.Model):
-<<<<<<< HEAD
 
     """ МОДЕЛЬ ТРАНЗАКЦИИ. """
 
-=======
-    """Transfer Account"""
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
     class TransactionTypes(models.TextChoices):
         DEPOSIT = 'Deposit', 'Deposit'
         WITHDRAWAL = 'Withdrawal', 'Withdrawal'
         TRANSFER = 'Transfer', 'Transfer'
 
-<<<<<<< HEAD
     class Currencies(models.TextChoices):
         TENGE = 'KZT', 'Tenge'
         RUBLI = 'RUB', 'Rubli'
         EURO = 'EUR', 'Euro'
         DOLLAR = 'USD', 'Dollar'
 
-=======
-    # user = models.ForeignKey(
-    #     MyUser,
-    #     verbose_name='отправитель',
-    #     on_delete=models.CASCADE
-    #     )
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
     outaccount = models.ForeignKey(
         BankAccount,
         verbose_name='счет-получатель',
@@ -133,7 +120,6 @@ class Transfer(models.Model):
         validators=[MinValueValidator(0)],  
     )
 
-<<<<<<< HEAD
     currency = models.CharField(
         verbose_name='валюта',
         max_length=4,
@@ -141,8 +127,6 @@ class Transfer(models.Model):
         default=Currencies.TENGE
     )
 
-=======
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
     balance = models.DecimalField(
         verbose_name='остаток на счете',
         max_digits=10,  
@@ -168,11 +152,8 @@ class Transfer(models.Model):
 
     def __str__(self):
         return f"{self.datetime} со счета {self.outaccount.type} {self.outaccount.iban} пользователя {self.outaccount.owner.fio}  на счет пользователя {self.inaccount.owner.fio} {self.inaccount.iban} сумму ({self.amount})"
-<<<<<<< HEAD
 
 
-=======
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
 
 # class BankCard(models.Model):
 #     number = models.CharField(

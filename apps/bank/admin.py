@@ -18,15 +18,9 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 @admin.register(Transfer)
 class TransferAdmin(admin.ModelAdmin):
-<<<<<<< HEAD
     list_display = ['pk', 'datetime', 'amount', 'currency', 'outaccount_iban',  'inaccount_iban', 'balance']
     list_filter = ['datetime', 'amount', 'currency']
     ordering = ['datetime', 'amount', 'currency']
-=======
-    list_display = ['pk', 'datetime', 'amount', 'outaccount_iban',  'inaccount_iban', 'balance']
-    list_filter = ['datetime', 'amount']
-    ordering = ['datetime', 'amount']
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
 
     def outaccount_iban(self, obj):
         return obj.outaccount.iban

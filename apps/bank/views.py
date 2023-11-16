@@ -116,7 +116,6 @@ class TransferSelfBankAccountsView(View):
                     inaccount_object.balance += currency_converter(float(amount), str(outaccount_object.currency), str(inaccount_object.currency))
                     outaccount_object.balance -= amount
                     outaccount_object.save()  # Сохраняем изменения в базе данных
-<<<<<<< HEAD
                     inaccount_object.save()   # Сохраняем изменения в базе данных
 
                     currency = inaccount_object.currency
@@ -127,15 +126,6 @@ class TransferSelfBankAccountsView(View):
                         inaccount=inaccount_object,
                         currency=currency,
                         balance=outaccount_object.balance)
-=======
-                    inaccount_object.save()
-                    Transfer.objects.create(
-                        amount=amount, 
-                        outaccount=outaccount_object, 
-                        inaccount=inaccount_object, 
-                        balance=outaccount_object.balance)
-                    print()
->>>>>>> a05c0e19501ebff935211fd6a07d6fe4afe60d9c
             except:
                 # Обработка исключений
                 pass
