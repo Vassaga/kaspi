@@ -113,22 +113,42 @@ class Transfer(models.Model):
         related_name='received_transfers'
     )
 
-    amount = models.DecimalField(
-        verbose_name='сумма',
+    outamount = models.DecimalField(
+        verbose_name='исходящая сумма',
         max_digits=10,  
         decimal_places=2,
         validators=[MinValueValidator(0)],  
     )
 
-    currency = models.CharField(
-        verbose_name='валюта',
+    inamount = models.DecimalField(
+        verbose_name='поступившая сумма',
+        max_digits=10,  
+        decimal_places=2,
+        validators=[MinValueValidator(0)],  
+    )
+
+    outcurrency = models.CharField(
+        verbose_name='исходящая валюта',
         max_length=4,
         choices=Currencies.choices,
         default=Currencies.TENGE
     )
 
-    balance = models.DecimalField(
-        verbose_name='остаток на счете',
+    incurrency = models.CharField(
+        verbose_name='поступившая валюта',
+        max_length=4,
+        choices=Currencies.choices,
+        default=Currencies.TENGE
+    )
+
+    outbalance = models.DecimalField(
+        verbose_name='остаток на исходящем счете',
+        max_digits=10,  
+        decimal_places=2,
+    )
+
+    inbalance = models.DecimalField(
+        verbose_name='остаток на входящем счете',
         max_digits=10,  
         decimal_places=2,
     )
@@ -151,7 +171,7 @@ class Transfer(models.Model):
         verbose_name_plural = 'переводы'
 
     def __str__(self):
-        return f"{self.datetime} со счета {self.outaccount.type} {self.outaccount.iban} пользователя {self.outaccount.owner.fio}  на счет пользователя {self.inaccount.owner.fio} {self.inaccount.iban} сумму ({self.amount})"
+        return f"{self.datetime} со счета {self.outaccount.type} {self.outaccount.iban} пользователя {self.outaccount.owner.fio}  на счет пользователя {self.inaccount.owner.fio} {self.inaccount.iban})"
 
 
 

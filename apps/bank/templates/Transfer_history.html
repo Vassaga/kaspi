@@ -26,9 +26,9 @@
                         <p>ФИО контр-та</p>
                     </div>
                     <div class="schet">
-                        <p>сумма {{ transfer.amount }} {{ transfer.outaccount.currency }}</p>
-                        <p>со счета {{ transfer.outaccount.type}} на счет {{ transfer.inaccount.type }}</p>
-                        <p>{{ transfer.datetime }} </p>
+                        <p>{{ transfer.datetime }} сумма {{ transfer.outamount }} {{ transfer.outaccount.currency }}</p>
+                        <p>со счета своего {{ transfer.outaccount.type}} на счет {{ transfer.inaccount.owner.fio }} {{ transfer.inaccount.type }}</p>
+                        <p>остаток на счете {{ transfer.outbalance }} </p>
                     </div>
                 </div>
                 <br>

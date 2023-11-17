@@ -20,11 +20,11 @@ class BankAccountWidget(forms.Select):
 class TransferSelfForm(forms.ModelForm):
     class Meta:
         model = Transfer
-        fields = ['outaccount', 'inaccount', 'amount']
+        fields = ['outaccount', 'inaccount', 'outamount']
         labels = {
             'outaccount': 'Счет списания',
             'inaccount': 'Счет назначения',
-            'amount': 'Сумма'
+            'outamount': 'Сумма'
         }
 
     def __init__(self, *args, **kwargs):

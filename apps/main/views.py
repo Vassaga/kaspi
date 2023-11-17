@@ -4,7 +4,17 @@ from django.shortcuts import render
 
 
 def main_page(request): # главная страница приложения
-    return render(
-        template_name='main.html',
-        request=request
-    )
+    if request.user.is_authenticated:
+        user = request.user  
+        return render(
+            template_name='main.html',
+            request=request,
+            context = {
+                        'user': user
+                    }
+        )
+    else:
+        return render(
+            template_name='main.html',
+            request=request
+        )

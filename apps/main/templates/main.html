@@ -12,7 +12,7 @@
             <div class="search">
                 <br>
                 {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}"><span class="txt_search"> &#128269; Поиск по KspiVlad (нажми для выхода)</span></a>
+                <a href="{% url 'logout' %}"><span class="txt_search"> &#128269; авторизован {{ user.fio }} (нажми для выхода)</span></a>
                 {% else %}
                 <span class="txt_search"> &#128269; Поиск по KspiVlad (вы не автлоризованы)</span>
                 {% endif %}

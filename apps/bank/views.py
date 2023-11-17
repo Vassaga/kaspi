@@ -14,6 +14,7 @@ from auths.models import MyUser
 from bank.models import BankAccount, Transfer
 from bank.forms.create_bankaccount import BankAccountForm
 from bank.forms.TransferSelfBankAccForm import TransferSelfForm
+from bank.forms.TransferAnyBankAccForm import TransferAnyForm
 from bank.currency_converter import currency_converter
 
 
@@ -105,29 +106,32 @@ class TransferSelfBankAccountsView(View):
         form = TransferSelfForm(request.POST)
         user = request.user
         if form.is_valid():
-            amount = form.cleaned_data['amount']
+            outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
             outaccount_object = form.fields['outaccount'].queryset.get(pk=outaccount.pk)
             inaccount = form.cleaned_data['inaccount']
             inaccount_object = form.fields['inaccount'].queryset.get(pk=inaccount.pk)
+            inamount = currency_converter(float(outamount), str(outaccount_object.currency), str(inaccount_object.currency))
             try:
-                if outaccount_object.balance < amount:
+                if outaccount_object.balance < outamount:
                     messages.error(request, 'Недостаточно средств на счете списания.')
                     return redirect('success/')
                 else:
-                    inaccount_object.balance += currency_converter(float(amount), str(outaccount_object.currency), str(inaccount_object.currency))
-                    outaccount_object.balance -= amount
+                    inaccount_object.balance += inamount
+                    outaccount_object.balance -= outamount
                     outaccount_object.save()  # Сохраняем изменения в базе данных
                     inaccount_object.save()   # Сохраняем изменения в базе данных
-
-                    currency = inaccount_object.currency
-
+                    incurrency = inaccount_object.currency
+                    outcurrency = outaccount_object.currency
                     Transfer.objects.create(
-                        amount=amount, 
                         outaccount=outaccount_object, 
                         inaccount=inaccount_object,
-                        currency=currency,
-                        balance=outaccount_object.balance)
+                        outamount=outamount,
+                        inamount=inamount,
+                        outcurrency=outcurrency,
+                        incurrency=incurrency,
+                        outbalance=outaccount_object.balance,
+                        inbalance=inaccount_object.balance)
             except:
                 # Обработка исключений
                 pass
@@ -148,8 +152,6 @@ class TransfersHistoryView(View):
 
     """ СТРАННИЦА ИСТОРИИ ПЕРЕВОДОВ. """
 
-    
-
     def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             user = request.user   
@@ -167,3 +169,48 @@ class TransfersHistoryView(View):
             )
         else:
             return redirect('login/')
+        
+
+class TransferAnyBankAccountsView(View):
+
+    template_name = 'TransferAnyBankAccounts.html'
+
+    def get(self, request):
+        form = TransferAnyForm(user=request.user)
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = TransferAnyForm(request.POST)
+        user = request.user
+        if form.is_valid():
+            outamount = form.cleaned_data['outamount']
+            outaccount = form.cleaned_data['outaccount']
+            inaccount = form.cleaned_data['inaccount']
+            inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
+            try:
+                if outaccount.balance < outamount:
+                    messages.error(request, 'Недостаточно средств на счете списания.')
+                    return redirect('success/')
+                else:
+                    inaccount.balance += inamount
+                    outaccount.balance -= outamount
+                    outaccount.save()
+                    inaccount.save()
+                    incurrency = inaccount.currency
+                    outcurrency = outaccount.currency
+                    Transfer.objects.create(
+                         outaccount=outaccount, 
+                         inaccount=inaccount,
+                         outamount=outamount, 
+                         inamount=inamount,
+                         outcurrency=outcurrency,
+                         incurrency=incurrency,
+                         outbalance=outaccount.balance,
+                         inbalance=inaccount.balance)
+            except:
+                # Обработка исключений
+                pass
+            messages.success(request, 'Транзакция успешно выполнена.')        
+            return redirect('success/')
+        return render(request, self.template_name, {'form': form})
+    
