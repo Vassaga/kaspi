@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/catalog.css">
-    <title>Категории</title>
+    <link rel="stylesheet" href="/static/css/products.css">
+    <title>Товары</title>
 </head>
 <body>
     <div class="ALL">
@@ -19,9 +19,9 @@
             </div>
         </div>
         <div class="stage1"><H1>пусто</H1></div>
-        {% if categories %}
-            {% for category in categories %}
-            <a href="/shop/catalog/{{ category.pk }}/"><div class="category"><H1>{{ category }}</H1></div></a>
+        {% if products %}
+            {% for product in products %}
+                <div class="category"><H1>{{ product.name }}</H1></div>
             {% endfor %}
         {% endif %}
         <div class="foot">

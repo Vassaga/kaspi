@@ -27,3 +27,24 @@ def create_user(self, number: str, password: str) -> 'MyUser':
     return custom_user
 =====================================
 
+РЕЙТИНГ
+
+1. Оценки пользователей:
+Добавьте поле для оценок, где пользователи могут оценивать товары от 1 до 5 (или любого другого диапазона). Затем рассчитайте среднюю оценку товара на основе всех пользовательских оценок.
+
+python
+Copy code
+class Product(models.Model):
+    # Другие поля модели товара
+
+    ratings = models.ManyToManyField(User, through='Rating', related_name='rated_products')
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    class Meta:
+        unique_together = ('user', 'product')
+		
+=====================================
