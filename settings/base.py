@@ -32,6 +32,7 @@ PROJECT_APPS = [
     'main.apps.MainConfig',
     'bank.apps.BankConfig',
     'auths.apps.AuthsConfig',
+    'shop.apps.ShopConfig',
 ]
 
 INSTALLED_APPS = PROJECT_APPS + DJANGO_APPS

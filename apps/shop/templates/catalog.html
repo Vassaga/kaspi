@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/catalog.css">
+    <title>Категории</title>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <div class="search">
+                <br>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}"><span class="txt_search"> &#128269; авторизован {{ user.fio }} (нажми для выхода)</span></a>
+                {% else %}
+                <span class="txt_search"> &#128269; Поиск по KspiVlad (вы не автлоризованы)</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="stage1"></div>
+        <div class="stage2">
+            <div class="stage2_stage">
+                
+            </div>
+            <div class="app_stage">
+                
+            </div>
+        </div>
+        <div class="offers"></div>
+        
+        <div class="foot">
+            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
+            <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_activ_ico.png"></div></a>
+            <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_trash_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>
+        </div>
+    </div>
+    
+</body>
+</html>
