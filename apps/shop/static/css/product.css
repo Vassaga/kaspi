@@ -1,0 +1,96 @@
+
+.ALL
+{
+
+    height: 900px;
+    width: 500px;
+    background-color: rgb(219, 218, 218);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+}
+
+.head  
+{
+    width: 500px;
+    height: 90px;
+    position: fixed;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    display: flex; /* Используем flexbox внутри .head */
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+   
+}
+
+.search
+{
+    width: 95%;
+    height: 60px;
+    background-color: rgb(219, 218, 218);
+    border-radius: 12px;
+    position: relative;
+    text-align: left;
+    margin-top: 1px;
+}
+
+.txt_search
+{
+    color: darkgrey;
+    position: absolute;
+    top: 30%;
+    margin-left: 30px;
+}
+
+.stage1
+{
+    width: 100%;
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+}
+
+.product
+{
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+}
+
+.foot
+{
+    width: 500px;
+    height: 110px;
+    background-color: white;
+    display: inline-block;
+    position: fixed;
+    top: 650px;
+    left: auto;
+    right: auto;
+    flex-direction: row;
+
+}
+
+.foot_1
+{
+    width: 19%; /* Задайте здесь нужную ширину вашего div */
+    height: 100%; /* Задайте здесь нужную высоту вашего div */
+    background-size: 100%;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.foot_1 img {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

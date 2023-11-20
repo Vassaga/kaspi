@@ -42,7 +42,7 @@ def catalog_page(request): # главная страница приложени�
             request=request
         )
     
-class ProductPageView(View):
+class ProductsPageView(View):
 
     template_name = 'products.html'
 
@@ -53,5 +53,18 @@ class ProductPageView(View):
         return render(
             request, 
             self.template_name, 
-            context = {'pk': pk, 'products': products})
+            context = {'pk': pk, 'products': products, 'category': category})
 
+
+class ProductPageView(View):
+
+    template_name = 'product.html'
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('pk', None)
+        product = Product.objects.get(pk=pk)
+        # product = Product.objects.filter(category=category)
+        return render(
+            request, 
+            self.template_name, 
+            context = {'pk': pk, 'product': product})
