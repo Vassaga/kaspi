@@ -40,12 +40,24 @@
                 <div class="stage" id="app8"><a href="QR/"><img src="/static/images/kaspi_MyBankapp_ico.png"></a></div>
             </div>
         </div>
-        <div class="stage2">
-
+        {% if products %}
+            {% for product in products %}
+                <a href="/shop/{{ product.pk }}/"><div class="product">
+                    <hr>
+                    <H1>{{ product.name }}</H1>
+                    <hr>
+                    <p>Стоимость: {{ product.price }} тенге</p>
+                    <p>Доступно: {{ product.quantity }} шт.</p>
+                    <hr>
+                </div></a>
+            {% endfor %}
+        {% endif %}
+        <div class="product">
+            <H1>Продукт</H1>
+            <p>Цена</p>
         </div>
-        
         <div class="foot">
-            <a href="shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_activ_ico.png"></div></a>
+            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_activ_ico.png"></div></a>
             <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
             <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_trash_no_activ_ico.png"></div>

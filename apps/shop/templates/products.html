@@ -23,9 +23,26 @@
         <div class="stage1"><H1>пусто</H1></div>
         {% if products %}
             {% for product in products %}
-            <a href="/shop/{{ product.pk }}/"><div class="category"><H1>{{ product.name }}</H1></div></a>
+            <a href="/shop/{{ product.pk }}/">
+                <div class="category">
+                    <hr>
+                    <H1>{{ product.name }}</H1>
+                    <hr>
+                    <p>Стоимость: {{ product.price }} тенге</p>
+                    <p>Доступно: {{ product.quantity }} шт.</p>
+                    <hr>
+                </div>
+            </a>
             {% endfor %}
         {% endif %}
+        <div class="category">
+            <hr>
+            <H1>Продукт</H1>
+            <hr>
+            <p>Стоимость: 000 тенге</p>
+            <p>Доступно: 000 шт.</p>
+            <hr>
+        </div>
         <div class="foot">
             <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
             <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_activ_ico.png"></div></a>

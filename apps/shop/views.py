@@ -10,18 +10,24 @@ from shop.models import (
 
 def shop_page(request): # главная страница приложения
     if request.user.is_authenticated:
-        user = request.user  
+        user = request.user
+        products = Product.objects.all().order_by('rating')
         return render(
             template_name='shop.html',
             request=request,
             context = {
-                        'user': user
+                        'user': user,
+                        'products': products
                     }
         )
     else:
+        products = Product.objects.all().order_by('rating')
         return render(
-            template_name='main.html',
-            request=request
+            template_name='shop.html',
+            request=request,
+            context = {
+                        'products': products
+                    }
         )
     
 def catalog_page(request): # главная страница приложения
@@ -37,9 +43,13 @@ def catalog_page(request): # главная страница приложени�
                     }
         )
     else:
+        categories = Category.objects.all().order_by('name')
         return render(
-            template_name='main.html',
-            request=request
+            template_name='catalog.html',
+            request=request,
+            context = {
+                        'categories': categories
+                    }
         )
     
 class ProductsPageView(View):
@@ -58,13 +68,27 @@ class ProductsPageView(View):
 
 class ProductPageView(View):
 
+    
     template_name = 'product.html'
 
     def get(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        product = Product.objects.get(pk=pk)
-        # product = Product.objects.filter(category=category)
-        return render(
-            request, 
-            self.template_name, 
-            context = {'pk': pk, 'product': product})
+        if request.user.is_authenticated:
+            user = request.user
+            pk = kwargs.get('pk', None)
+            product = Product.objects.get(pk=pk)
+            # product = Product.objects.filter(category=category)
+            return render(
+                request, 
+                self.template_name, 
+                context = {'pk': pk, 'user': user, 'product': product}
+            )
+        else:
+            pk = kwargs.get('pk', None)
+            product = Product.objects.get(pk=pk)
+            # product = Product.objects.filter(category=category)
+            return render(
+                request, 
+                self.template_name, 
+                context = {'pk': pk, 'product': product}
+            )
+        

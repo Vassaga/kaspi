@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/css/product.css">
     <title>{{ product.name }}</title>
 </head>
+{% endif %}
 <body>
     <div class="ALL">
         <div class="head">
@@ -20,12 +21,13 @@
             </div>
         </div>
         <div class="stage1"><H1>пусто</H1></div>
-        
+        {% if product %}
                 <div class="product">
                     <H1>{{ product.name }}</H1>
                     <hr>
                     <p>Стоимость: {{ product.price}} тенге</p>
                     <p>Рейтинг товара: {{ product.rating}}</p>
+                    <p>В наличии: {{ product.quantity }} шт.</p>
                     <hr>
                     <p>Описание:</p>
                     <p>
@@ -35,10 +37,10 @@
                         уникальными неузнаваемости постоянный степени до
                     </p>
                 </div>
-        
+        {% endif %}
         <div class="foot">
-            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
-            <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_activ_ico.png"></div></a>
+            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_activ_ico.png"></div></a>
+            <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
             <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_trash_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>
@@ -46,5 +48,5 @@
     </div>
     
 </body>
-{% endif %}
+
 </html>
