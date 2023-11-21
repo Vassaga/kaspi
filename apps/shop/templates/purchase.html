@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/product.css">
-    <title>{{ product.name }}</title>
+    <title>Оформление покупки {{ product.name }}</title>
 </head>
 {% endif %}
 <body>
@@ -21,6 +21,9 @@
             </div>
         </div>
         <div class="stage1"><H1>пусто</H1></div>
+
+
+
         {% if product %}
                 <div class="product">
                     <H1>{{ product.name }}</H1>
@@ -29,22 +32,16 @@
                     <p>Рейтинг товара: {{ product.rating}}</p>
                     <p>В наличии: {{ product.quantity }} шт.</p>
                     <hr>
-                    <p>Описание:</p>
-                    <p>
-                        Активно уникальными нашей третьего чего необходимость сфера 
-                        уникальными сомнений, фиксирует активно неузнаваемости в 
-                        необходимость развивающиеся статус не с развивающиеся и 
-                        уникальными неузнаваемости постоянный степени до
-                    </p>
-                    <a href="/shop/purchase/{{ product.pk }}/" class="button-link">Купить</a>
-                    <br>
                 </div>
         {% endif %}
+
+
+
         <div class="foot">
-            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_activ_ico.png"></div></a>
+            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
             <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
             <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
-            <div class="foot_1"><img src="/static/images/kaspi_trash_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_trash_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>
         </div>
     </div>

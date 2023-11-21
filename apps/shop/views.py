@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from shop.models import (
@@ -92,3 +92,31 @@ class ProductPageView(View):
                 context = {'pk': pk, 'product': product}
             )
         
+
+class PurchaseProductView(View):
+
+    template_name = 'purchase.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            pk = kwargs.get('pk', None)
+            product = Product.objects.get(pk=pk)
+            # product = Product.objects.filter(category=category)
+            return render(
+                request, 
+                self.template_name, 
+                context = {'pk': pk, 'user': user, 'product': product}
+            )
+    
+    # def post(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         user = request.user
+    #         pk = kwargs.get('pk', None)
+    #         product = Product.objects.get(pk=pk)
+
+        
+        # Здесь можно добавить логику оформления покупки, например, создание заказа или изменение статуса товара
+        
+        # После завершения логики перенаправьте пользователя на другую страницу
+        return redirect('success_purchase')  # Или перенаправление на страницу с сообщением об успешной покупке
