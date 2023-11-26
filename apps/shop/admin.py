@@ -17,3 +17,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'price', 'quantity', 'rating', 'pk']
     list_filter = ['name', 'category', 'price', 'quantity', 'rating']
     ordering = ['name', 'category', 'price', 'quantity', 'rating', 'pk']
+
+
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+    list_display = ['product', 'quantity', 'user', 'price', 'iban', 'purchase_date', 'purchase_type', 'inst_duration', 'monthly_payment', 'pk']
+    list_filter = ['product', 'user', 'price', 'iban', 'purchase_type', 'inst_duration', 'monthly_payment']
+    ordering = ['product', 'quantity', 'user', 'price', 'iban', 'purchase_date', 'purchase_type', 'inst_duration', 'monthly_payment']

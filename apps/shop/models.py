@@ -57,7 +57,7 @@ class Purchase(models.Model):
     """ МОДЕЛЬ ПОКУПКИ. """
 
     class PurchaseTypes(models.TextChoices):
-        CASH = 'Cash', 'Наличные'
+        CASH = 'Cash', 'Полная оплата'
         INST = 'Inst', 'Рассрочка'
 
     user = models.ForeignKey(
@@ -72,11 +72,22 @@ class Purchase(models.Model):
         on_delete=models.CASCADE
     )
 
+    quantity = models.IntegerField(
+        verbose_name='количество',
+        default=1,
+        blank=False,
+    )
+
     price = models.DecimalField(
         verbose_name='Стоимость',
         max_digits=12, 
         decimal_places=2, 
         default='0'
+    )
+
+    iban = models.CharField(
+        verbose_name='счет списания',
+        max_length=100
     )
 
     purchase_date = models.DateTimeField(

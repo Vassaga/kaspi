@@ -9,6 +9,8 @@ from typing import Any
 class TransferAnyForm(forms.ModelForm):
 
     account_number = forms.CharField(label='Номер счета')
+    
+
 
     class Meta:
         model = Transfer

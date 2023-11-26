@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/purchasePage.css">
+    <title>Покупка</title>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/transfers/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+        <div class="post_head">
+           
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+        </div>
+
+
+        {% endif %} 
+        
+        <div class="foot">
+            <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
+            <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
+            <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_trash_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>

@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
+
+from shop.forms.purchase_create_form import PurchaseCreateForm
+from bank.models import BankAccount
 
 from shop.models import (
     Category,
@@ -83,31 +87,96 @@ class ProductPageView(View):
                 context = {'pk': pk, 'user': user, 'product': product}
             )
         else:
-            pk = kwargs.get('pk', None)
-            product = Product.objects.get(pk=pk)
-            # product = Product.objects.filter(category=category)
-            return render(
-                request, 
-                self.template_name, 
-                context = {'pk': pk, 'product': product}
-            )
+            return redirect('/bank/login/')
         
+class PurchaseSuccessView(View):
+
+    """ СТРАННИЦА О СТАТУСЕ ПОКУПКИ. """
+
+    template_name = 'purchase_done.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
 
 class PurchaseProductView(View):
 
     template_name = 'purchase.html'
 
     def get(self, request, *args, **kwargs):
+        # form = PurchaseCreateForm()
+        form = PurchaseCreateForm(user=request.user)
         if request.user.is_authenticated:
             user = request.user
             pk = kwargs.get('pk', None)
             product = Product.objects.get(pk=pk)
+            # price = product.price
+            # quantity = form.cleaned_data['quantity']
+            # print(quantity)
             # product = Product.objects.filter(category=category)
             return render(
                 request, 
                 self.template_name, 
-                context = {'pk': pk, 'user': user, 'product': product}
+                context = {'pk': pk, 'user': user, 'product': product, 'form': form}
             )
+        else:
+            return redirect('login/')
+        
+    def post(self, request, *args, **kwargs):
+        form = PurchaseCreateForm(request.POST, user=request.user)
+        print('01')
+        if request.user.is_authenticated:
+            if form.is_valid():
+                print('02')
+                user = request.user #?
+                pk = kwargs.get('pk', None)
+                product = Product.objects.get(pk=pk)
+                quantity = form.cleaned_data['quantity']
+                price = product.price*quantity
+                bankaccount = form.cleaned_data['BankAccount']
+                obj_BankAccount = BankAccount.objects.get(pk=bankaccount.pk)
+                inst = form.cleaned_data['my_field']
+                if inst == 'option1' and obj_BankAccount.type == 'Gold':    # Логика покупки, если без рассрочки и каспи ГОЛД
+                    try:
+                        if bankaccount.balance < price:
+                            messages.error(request, 'Недостаточно средств на счете списания.')
+                            return redirect('success/')
+                        else:
+                            obj_BankAccount.balance -= price
+                            product.quantity -= quantity
+                            obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
+                            product.save() # Сохраняем изменения количества товара в базе данных
+                            Purchase.objects.create(
+                                user=user,
+                                product=product,
+                                quantity=quantity,
+                                price=price,
+                                iban=bankaccount.iban,
+                                purchase_type='Cash',
+                            )
+                    except:
+                        # Обработка исключений
+                        pass 
+                else:
+                    print('not ok')
+                try:
+                    if BankAccount.balance < price:
+                        messages.error(request, 'Недостаточно средств на счете списания.')
+                        return redirect('success/')
+                    else:
+                        print('03')
+                except:
+                    # Обработка исключений
+                    pass    
+
+                messages.success(request, 'Покупка успешно выполнена.')        
+                return redirect('success/')
+
+        else:
+            return redirect('login/')
+        messages.error(request, 'Ошибка.')        
+        return redirect('success/')
+
     
     # def post(self, request, *args, **kwargs):
     #     if request.user.is_authenticated:
@@ -119,4 +188,4 @@ class PurchaseProductView(View):
         # Здесь можно добавить логику оформления покупки, например, создание заказа или изменение статуса товара
         
         # После завершения логики перенаправьте пользователя на другую страницу
-        return redirect('success_purchase')  # Или перенаправление на страницу с сообщением об успешной покупке
+        # return redirect('success_purchase')  # Или перенаправление на страницу с сообщением об успешной покупке

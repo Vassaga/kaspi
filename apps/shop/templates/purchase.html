@@ -32,6 +32,11 @@
                     <p>Рейтинг товара: {{ product.rating}}</p>
                     <p>В наличии: {{ product.quantity }} шт.</p>
                     <hr>
+                    <form method="post" action="/shop/purchase/{{ product.pk }}/">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Подтвердить">
+                    </form>
                 </div>
         {% endif %}
 
