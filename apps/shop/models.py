@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.utils import timezone
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from auths.models import MyUser
@@ -114,6 +116,13 @@ class Purchase(models.Model):
         decimal_places=2,
         blank=True,
         null=True
+    )
+
+    next_pay_date = models.DateTimeField(
+        verbose_name='Дата следующего списания',
+        blank=True,
+        null=True
+        # default=timezone.now() + timezone.timedelta(days=30)  
     )
 
     remaining_amount = models.DecimalField(

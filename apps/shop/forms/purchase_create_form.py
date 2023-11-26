@@ -6,7 +6,11 @@ from shop.models import Purchase, Product
 
 class PurchaseCreateForm(forms.Form):
 
-    quantity = forms.IntegerField(label='Количество', widget=forms.NumberInput(attrs={'min': '1'}))
+    quantity = forms.IntegerField(
+        label='Количество', 
+        widget=forms.NumberInput(attrs={'min': '1'}),
+        initial=1
+        )
 
     BankAccount = forms.ModelChoiceField(
         queryset=BankAccount.objects.none(), 
@@ -24,16 +28,20 @@ class PurchaseCreateForm(forms.Form):
             
     
     CHOICES = (
-        ('option1', 'нет'),
-        ('option2', '1 месяц'),
-        ('option3', '2 месяца'),
-        ('option4', '3 месяца'),
+        (0, 'нет'),
+        (1, '1 месяц'),
+        (2, '2 месяца'),
+        (3, '3 месяца'),
     )
 
-    my_field = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class': 'form-control'}), label='Рассрочка')
+    my_field = forms.ChoiceField(
+        choices=CHOICES, 
+        widget=forms.Select(attrs={'class': 'form-control'}), 
+        label='Рассрочка'
+    )
 
     def clean(self):
         cleaned_data = super().clean()
-        quantity = cleaned_data.get('quantity')
+        # quantity = cleaned_data.get('quantity')
         
         return cleaned_data

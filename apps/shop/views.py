@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.utils import timezone
 
 from shop.forms.purchase_create_form import PurchaseCreateForm
 from bank.models import BankAccount
@@ -104,16 +105,11 @@ class PurchaseProductView(View):
     template_name = 'purchase.html'
 
     def get(self, request, *args, **kwargs):
-        # form = PurchaseCreateForm()
         form = PurchaseCreateForm(user=request.user)
         if request.user.is_authenticated:
             user = request.user
             pk = kwargs.get('pk', None)
             product = Product.objects.get(pk=pk)
-            # price = product.price
-            # quantity = form.cleaned_data['quantity']
-            # print(quantity)
-            # product = Product.objects.filter(category=category)
             return render(
                 request, 
                 self.template_name, 
@@ -124,10 +120,10 @@ class PurchaseProductView(View):
         
     def post(self, request, *args, **kwargs):
         form = PurchaseCreateForm(request.POST, user=request.user)
-        print('01')
+        print('01')   # удали
         if request.user.is_authenticated:
             if form.is_valid():
-                print('02')
+                print('02')   # удали
                 user = request.user #?
                 pk = kwargs.get('pk', None)
                 product = Product.objects.get(pk=pk)
@@ -135,11 +131,16 @@ class PurchaseProductView(View):
                 price = product.price*quantity
                 bankaccount = form.cleaned_data['BankAccount']
                 obj_BankAccount = BankAccount.objects.get(pk=bankaccount.pk)
-                inst = form.cleaned_data['my_field']
-                if inst == 'option1' and obj_BankAccount.type == 'Gold':    # Логика покупки, если без рассрочки и каспи ГОЛД
+                inst = int(form.cleaned_data['my_field'])
+                # if inst == 'option1' and obj_BankAccount.type == 'Gold':  # Логика покупки, если без рассрочки и каспи ГОЛД
+                if inst == 0:     # Логика покупки, если без рассрочки
                     try:
+
                         if bankaccount.balance < price:
                             messages.error(request, 'Недостаточно средств на счете списания.')
+                            return redirect('success/')
+                        elif product.quantity < quantity:
+                            messages.error(request, 'Количество товара в наличии не достаточно.')
                             return redirect('success/')
                         else:
                             obj_BankAccount.balance -= price
@@ -155,23 +156,42 @@ class PurchaseProductView(View):
                                 purchase_type='Cash',
                             )
                     except:
-                        # Обработка исключений
-                        pass 
-                else:
-                    print('not ok')
-                try:
-                    if BankAccount.balance < price:
-                        messages.error(request, 'Недостаточно средств на счете списания.')
+                        messages.error(request, 'Ошибка покупки.')
+                        return redirect('success/') 
+                elif inst != 0: # Логика покупки, c рассрочкой N месяц
+                    try:
+                        print('03')   # удали
+                        product.quantity -= quantity
+                        obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
+                        product.save() # Сохраняем изменения количества товара в базе данных
+                        print('04')   # удали
+                        Purchase.objects.create(
+                            user=user,
+                            product=product,
+                            quantity=quantity,
+                            price=price,
+                            iban=bankaccount.iban,
+                            purchase_type='Inst',
+                            inst_duration=inst,
+                            monthly_payment=(price/inst),
+                            next_pay_date=timezone.now() + timezone.timedelta(days=30),
+                            remaining_amount=price
+                        )
+                        print('ok')
+                    except:
+                        messages.error(request, 'Ошибка покупки.')
                         return redirect('success/')
-                    else:
-                        print('03')
-                except:
-                    # Обработка исключений
-                    pass    
-
+                # try:
+                #     if BankAccount.balance < price:
+                #         messages.error(request, 'Недостаточно средств на счете списания.')
+                #         return redirect('success/')
+                #     else:
+                #         print('03')
+                # except:
+                #     # Обработка исключений
+                #     pass    
                 messages.success(request, 'Покупка успешно выполнена.')        
                 return redirect('success/')
-
         else:
             return redirect('login/')
         messages.error(request, 'Ошибка.')        
