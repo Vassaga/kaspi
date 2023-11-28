@@ -1,5 +1,7 @@
 
 
+python manage.py shell < apps/shop/inst.py
+
 py -m venv env
 
 

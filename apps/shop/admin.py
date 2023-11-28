@@ -22,5 +22,5 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = ['product', 'quantity', 'user', 'price', 'iban', 'purchase_date', 'purchase_type', 'inst_duration', 'monthly_payment', 'next_pay_date', 'remaining_amount', 'pk']
-    list_filter = ['product', 'user', 'price', 'iban', 'purchase_type', 'inst_duration', 'monthly_payment']
+    list_filter = ['product', 'user', 'iban', 'purchase_type', 'inst_duration', 'monthly_payment']
     ordering = ['product', 'quantity', 'user', 'price', 'iban', 'purchase_date', 'purchase_type', 'inst_duration', 'monthly_payment']

@@ -91,8 +91,9 @@ class Transfer(models.Model):
 
     class TransactionTypes(models.TextChoices):
         DEPOSIT = 'Deposit', 'Deposit'
-        WITHDRAWAL = 'Withdrawal', 'Withdrawal'
-        TRANSFER = 'Transfer', 'Transfer'
+        WITHDRAWAL = 'Withdrawal', 'Снятие'
+        TRANSFER = 'Transfer', 'Перевод'
+        INST = 'Inst', 'Рассрочка'
 
     class Currencies(models.TextChoices):
         TENGE = 'KZT', 'Tenge'

@@ -174,7 +174,8 @@ class PurchaseProductView(View):
                             purchase_type='Inst',
                             inst_duration=inst,
                             monthly_payment=(price/inst),
-                            next_pay_date=timezone.now() + timezone.timedelta(days=30),
+                            # next_pay_date=timezone.now() + timezone.timedelta(days=30),  # настрой единый период??
+                            next_pay_date=timezone.now() + timezone.timedelta(minutes=5),  # настрой единый период??
                             remaining_amount=price
                         )
                         print('ok')
