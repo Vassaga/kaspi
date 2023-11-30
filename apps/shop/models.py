@@ -1,3 +1,6 @@
+
+""" SHOP MODELS """
+
 from django.db import models
 
 from django.utils import timezone
@@ -8,7 +11,9 @@ from auths.models import MyUser
 
 
 class Category(models.Model):
+
     """ МОДЕЛЬ КАТЕГОРИИ ТОВАРА. """
+
     name = models.CharField(
         verbose_name= 'Категория',
         max_length=100
@@ -19,6 +24,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 class Product(models.Model):
 

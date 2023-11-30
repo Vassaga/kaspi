@@ -1,4 +1,5 @@
-''' SHOP URLS'''
+
+""" SHOP URLS """
 
 
 from django.urls import path

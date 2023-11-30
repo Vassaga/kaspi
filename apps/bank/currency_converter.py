@@ -29,5 +29,5 @@ def currency_converter(amount, out_currency, in_currency):
         result = amount / 90
     else:
         result = amount
-    print(f"From {amount} {out_currency} converted in {result} {in_currency}") # проверка корректности конвертации
+    print(f"From {amount} {out_currency} converted in {result} {in_currency}") # индикация корректности конвертации в консоли
     return Decimal(str(result)) # конвертируем float/int в децимал для передачи его в объект трансфера

@@ -2,6 +2,7 @@ env/
 .env
 
 __pycache__/
+redis-latest/
 *.pyc
 *.pyo
 *.env

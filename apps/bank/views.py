@@ -82,6 +82,7 @@ class CreateBankAccountView(View):
             return redirect('/bank/')
         return render(request, self.template_name, {'form': form})
     
+    
 class TransfersPageView(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ. """
@@ -148,6 +149,7 @@ class TransferSuccessView(View):
     def get(self, request):
         return render(request, self.template_name)
     
+    
 class TransfersHistoryView(View):
 
     """ СТРАННИЦА ИСТОРИИ ПЕРЕВОДОВ. """
@@ -158,7 +160,6 @@ class TransfersHistoryView(View):
             # Transfers = Transfer.objects.filter(owner=user).order_by('owner')
             # Transfers = Transfer.objects.filter(outaccount__owner=user, inaccount__owner=user)
             Transfers = Transfer.objects.filter(Q(outaccount__owner=user) | Q(inaccount__owner=user))
-
             return render(
                 template_name = 'Transfer_history.html',
                 request=request,
@@ -172,6 +173,8 @@ class TransfersHistoryView(View):
         
 
 class TransferAnyBankAccountsView(View):
+
+    """ СТРАННИЦА ПЕРЕВОДОВ НА СЧЕТ ДРУГОГО КЛИЕНТА КАСПИ. """
 
     template_name = 'TransferAnyBankAccounts.html'
 
