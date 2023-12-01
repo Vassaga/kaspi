@@ -10,12 +10,8 @@
     <div class="ALL">
         <div class="head">
             <div class="search">
-                <br>
-                {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}"><span class="txt_search"> &#128269; авторизован {{ user.fio }} (нажми для выхода)</span></a>
-                {% else %}
-                <span class="txt_search"> &#128269; Поиск по KspiVlad (вы не автлоризованы)</span>
-                {% endif %}
+                <a href="/shop/"><div class="a001"><img src="/static/images/kaspi_backpoint2_ico.png"></div></a>
+                <div class="a002"><img src="/static/images/kaspi_Search_fake.png"></div>
             </div>
         </div>
         <div class="stage1">

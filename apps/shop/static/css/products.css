@@ -1,7 +1,6 @@
 
 .ALL
 {
-
     height: auto;
     width: 500px;
     background-color: rgb(219, 218, 218);
@@ -10,7 +9,6 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-
 }
 
 .head  
@@ -63,16 +61,17 @@
 
 .foot
 {
+    position: sticky;
+    bottom: 0;
     width: 500px;
     height: 110px;
     background-color: white;
-    display: inline-block;
-    position: fixed;
-    top: 650px;
+    /* display: inline-block; */
+    /* position: fixed; */
+    /* top: 650px; */
     left: auto;
     right: auto;
     flex-direction: row;
-
 }
 
 .foot_1

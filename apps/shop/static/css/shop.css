@@ -1,7 +1,6 @@
 
 .ALL
 {
-
     height: auto;
     width: 500px;
     background-color: rgb(219, 218, 218);
@@ -10,13 +9,13 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-
+    z-index: 999;
 }
 
 .head  
 {
     width: 500px;
-    height: 90px;
+    height: 100px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
@@ -31,10 +30,25 @@
     width: 95%;
     height: 60px;
     background-color: rgb(219, 218, 218);
-    border-radius: 12px;
+    /* border-radius: 12px; */
     position: relative;
     text-align: left;
     margin-top: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.search div {
+    margin: 0 0px; /* Примерные отступы между элементами */
+}
+
+.a001 {
+    width: 70px; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
+}
+.a002 {
+    width: 80%; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
 }
 
 .txt_search
@@ -48,7 +62,7 @@
 .stage1
 {
     width: 100%;
-    height: 190px;
+    height: 110px;
     background-color: rgb(255, 255, 255);
     margin-top: 90px;
 }
@@ -104,16 +118,17 @@
 
 .foot
 {
+    position: sticky;
+    bottom: 0;
     width: 500px;
     height: 110px;
     background-color: white;
-    display: inline-block;
-    position: fixed;
-    top: 650px;
+    /* display: inline-block; */
+    /* position: fixed; */
+    /* top: 650px; */
     left: auto;
     right: auto;
     flex-direction: row;
-
 }
 
 .foot_1
