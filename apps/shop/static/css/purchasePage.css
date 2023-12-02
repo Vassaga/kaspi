@@ -1,5 +1,4 @@
-.ALL
-{
+.ALL {
     height: auto;
     width: 500px;
     background-color: rgb(219, 218, 218);
@@ -11,26 +10,22 @@
     
 }
 
-
-.head  
-{
+.head  {
     width: 500px;
     height: 100px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
-    display: flex; /* Используем flexbox внутри .head */
-    justify-content: center; /* Центрирование по вертикали */
-    align-items: center; /* Центрирование по горизонтали */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 999;
 }
 
-.search
-{
+.search {
     width: 95%;
     height: 60px;
     background-color: rgb(219, 218, 218);
-    /* border-radius: 12px; */
     position: relative;
     text-align: left;
     margin-top: 1px;
@@ -39,18 +34,18 @@
 }
 
 .search div {
-    margin: 0 0px; /* Примерные отступы между элементами */
+    margin: 0 0px;
 }
 
 .a001 {
-    width: 70px; /* Укажите требуемую ширину */
-    height: auto; /* Поддержание соотношения сторон */
-}
-.a002 {
-    width: 80%; /* Укажите требуемую ширину */
-    height: auto; /* Поддержание соотношения сторон */
+    width: 70px;
+    height: auto;
 }
 
+.a002 {
+    width: 80%;
+    height: auto;
+}
 
 .offer1
 {
@@ -58,12 +53,9 @@
     height: 100px;
     background-color: rgb(255, 255, 255);
     margin-top: 0px;
-    /* box-sizing: border-box; */
 }
 
-
-.messages
-{
+.messages {
     width: 100%;
     height: 200px;
     background-color: rgb(116, 235, 92);
@@ -71,26 +63,21 @@
 }
 
 .messages h2 {
-    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
-    font-size: 24px; /* Измените размер шрифта по вашему желанию */
-    font-weight: bold; /* Укажите желаемый вес шрифта */
-    /* Дополнительные свойства */
-    color: #333333; /* Цвет текста */
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
     text-align: center;
-    /* Другие свойства, если необходимо */
 }
 
-.offer2
-{
+.offer2 {
     width: 100%;
     height: 800px;
     background-color: rgb(255, 255, 255);
     margin-top: 0px;
-    /* box-sizing: border-box; */
 }
 
-.foot
-{
+.foot {
     position: sticky;
     bottom: 0;
     width: 500px;
@@ -99,10 +86,9 @@
     flex-direction: row;
 }
 
-.foot_1
-{
-    width: 19%; /* Задайте здесь нужную ширину вашего div */
-    height: 100%; /* Задайте здесь нужную высоту вашего div */
+.foot_1 {
+    width: 19%;
+    height: 100%;
     background-size: 100%;
     display: inline-block;
     overflow: hidden;

@@ -16,16 +16,17 @@
         <br>
         <br>
         <br>
-
-        <div class="chet_gold_info">
+        <div class="transfer">
             <div>
                 <form method="post" action="/transfers/self/">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="ПЕРЕВЕСТИ">
                 </form>
+                <br>
             </div>
         </div>
+        <div class="offers"></div>
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>

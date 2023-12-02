@@ -1,6 +1,5 @@
 
-.ALL
-{
+.ALL {
     min-height: 800px;
     width: 500px;
     background-color: rgb(219, 218, 218);
@@ -9,27 +8,24 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    z-index: 999;
 }
 
-.head  
-{
+.head  {
     width: 500px;
     height: 100px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
-    display: flex; /* Используем flexbox внутри .head */
-    justify-content: center; /* Центрирование по вертикали */
-    align-items: center; /* Центрирование по горизонтали */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
 }
 
-.search
-{
+.search {
     width: 95%;
     height: 60px;
     background-color: rgb(219, 218, 218);
-    /* border-radius: 12px; */
     position: relative;
     text-align: left;
     margin-top: 1px;
@@ -38,23 +34,22 @@
 }
 
 .search div {
-    margin: 0 0px; /* Примерные отступы между элементами */
+    margin: 0 0px;
 }
 
 .a001 img {
-    width: 100%; /* Укажите требуемую ширину */
-    height: auto; /* Поддержание соотношения сторон */
+    width: 100%;
+    height: auto;
     margin-top: 10px;
 }
+
 .a002 img {
-    width: 105%; /* Укажите требуемую ширину */
-    height: auto; /* Поддержание соотношения сторон */
+    width: 105%;
+    height: auto;
     margin-top: 10px;
 }
 
-
-.stage1
-{
+.stage1 {
     width: 100%;
     height: auto;
     background-color: rgb(255, 255, 255);
@@ -63,17 +58,17 @@
 
 .product {
     display: flex;
-    align-items: stretch; /* Делаем блоки одинаковой высоты */
+    align-items: stretch;
     width: 100%;
     background-color: rgb(255, 255, 255);
     margin-top: 4px;
 }
 
 .product_img {
-    flex: 0 0 auto; /* Не увеличивать размер блока */
+    flex: 0 0 auto;
     width: 33%;
-    display: flex; /* Изменено */
-    align-items: center; /* Изменено */
+    display: flex;
+    align-items: center;
 }
 
 .product_img img {
@@ -83,27 +78,22 @@
 }
 
 .product_text {
-    flex: 1; /* Занимать оставшееся пространство */
-    padding-left: 10px; /* Примерный внутренний отступ */
+    flex: 1;
+    padding-left: 10px;
 }
 
 .product h1 {
-    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
-    font-size: 24px; /* Измените размер шрифта по вашему желанию */
-    font-weight: bold; /* Укажите желаемый вес шрифта */
-    /* Дополнительные свойства */
-    color: #333; /* Цвет текста */
-    /* Другие свойства, если необходимо */
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
 }
 
-
 .product p {
-    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
-    font-size: 16px; /* Измените размер шрифта по вашему желанию */
-    font-weight: normal; /* Укажите желаемый вес шрифта */
-    /* Дополнительные свойства */
-    color: #333; /* Цвет текста */
-    /* Другие свойства, если необходимо */
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
 }
 
 a {
@@ -122,8 +112,7 @@ a {
     font-family: Arial, sans-serif;
 }
 
-.foot
-{
+.foot {
     position: sticky;
     bottom: 0;
     width: 500px;
@@ -132,10 +121,9 @@ a {
     flex-direction: row;
 }
 
-.foot_1
-{
-    width: 19%; /* Задайте здесь нужную ширину вашего div */
-    height: 100%; /* Задайте здесь нужную высоту вашего div */
+.foot_1 {
+    width: 19%;
+    height: 100%;
     background-size: 100%;
     display: inline-block;
     overflow: hidden;

@@ -1,6 +1,5 @@
-.ALL
-{
-    height: 900px;
+.ALL {
+    min-height: 800px;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -8,11 +7,9 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-
 }
 
-.head  
-{
+.head {
     width: 500px;
     height: 85px;
     position: fixed;
@@ -20,11 +17,9 @@
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
     flex-direction: row;
-    
 }
 
-.back_point
-{
+.back_point {
     display: inline-block;
     height: 100%;
     width: 80px;
@@ -37,8 +32,7 @@
     margin-top: 0px;
 }
 
-.My_Bank
-{
+.My_Bank {
     display: inline-block;
     height: 100%;
     width: 414px;
@@ -51,8 +45,12 @@
     margin-top: 0px;
 }
 
-.post_head
-{
+a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+.post_head {
     width: 500px;
     height: 60px;
     position: fixed;
@@ -60,10 +58,24 @@
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
     flex-direction: row;
+    text-align: center;
 }
 
-.div_info0
-{
+.post_head h2 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.div_info h2 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.div_info0 {
     width: 100%;
     background-color: rgb(255, 255, 255);
     margin-top: 66px;
@@ -71,8 +83,7 @@
     flex-direction: column;
 }
 
-.div_info
-{
+.div_info {
     width: 100%;
     background-color: rgb(255, 255, 255);
     margin-top: 2px;
@@ -80,9 +91,7 @@
     flex-direction: column;
 }
 
-
-.div1
-{
+.div1 {
     display: inline-block;
     width: 100%;
     height: 100px;
@@ -90,37 +99,65 @@
 }
 
 
-.ico_schet
-{
+.ico_schet {
     display: inline-block;
     width: 120px;
     height: 100px;
 }
 
-.schet
-{
+.schet {
     display: inline-block;
     width: 370px;
     height: 100px;
     vertical-align: bottom;
 }
 
-.foot
-{
-    width: 500px;
-    height: 100px;
-    background-color: white;
-    display: inline-block;
-    position: fixed;
-    top: 650px;
-    left: auto;
-    right: auto;
-    flex-direction: row;
+.offers {
+    width: 100%;
+    height: 600px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 2px;
 
 }
+.offer1 {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0px;
+}
 
-.foot_1
-{
+.offer2 {
+    width: 100%;
+    height: 600px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0px;
+}
+
+.messages {
+    width: 100%;
+    height: 200px;
+    background-color: rgb(116, 235, 92);
+    margin-top: 0px;
+}
+
+.messages h2 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+}
+
+.foot {
+    position: sticky;
+    bottom: 0;
+    width: 500px;
+    height: 110px;
+    background-color: white;
+    flex-direction: row;
+}
+
+.foot_1 {
     width: 100px;
     height: 100px;
     display: inline-block;

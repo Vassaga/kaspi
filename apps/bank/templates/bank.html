@@ -28,12 +28,12 @@
             {% else %}
                 <a href="/bank/create_account/gold/"><div class="chet_gold">
                     <div class="ico_red"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="red"><h2>Открыть Kaspi Gold</h2></div>
+                    <div class="open_schet"><h2>Открыть Kaspi Gold</h2></div>
                 </div></a>
             {% endif %}
             <div>
                 <div class="ico_schet"><img src="/static/images/kaspi_add_ico.png"></div>
-                <div class="schet"><h2>Оформить Kaspi Gold на ребенка</h2></div>
+                <div class="open_schet"><h2>Оформить Kaspi Gold на ребенка</h2></div>
             </div>
         </div>
         <div class="chet_red_info">
@@ -47,40 +47,32 @@
             {% else %}
                 <a href="/bank/create_account/red/"><div class="chet_red">
                         <div class="ico_red"><img src="/static/images/kaspi_add_ico.png"></div>
-                        <div class="red"><h2>Открыть Kaspi Red</h2></div>
+                        <div class="open_schet"><h2>Открыть Kaspi Red</h2></div>
                     </div></a>
             {% endif %}
-
         </div>
-
         <div class="chet_deposit_info">
             {% if Dep_accounts %}
                 {% for account in Dep_accounts %}
                 <div class="chet_deposit">
-                    <div class="ico_deposit"><img src="/static/images/kaspi_T_ico.png"></div>
+                    <div class="ico_deposit"><img src="/static/images/kaspi_D_ico.png"></div>
                     <div class="deposit"><h2>Депозит {{ account.balance }} {{ account.currency }}</h2></div>
                 </div>
                 {% endfor %}
                 <a href="/bank/create_account/dep/"><div>
                     <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="deposit"><h2>Открыть Kaspi Депозит</h2></div>
+                    <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
                 </div></a>
             {% else %}            
                 <a href="/bank/create_account/dep/"><div>
                     <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="deposit"><h2>Открыть Kaspi Депозит</h2></div>
+                    <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
                 </div></a>
             {% endif %}
         </div>
         {% else %}
-        
         {% endif %} 
-        <div class="chet_gold">
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+        <div class="offers"></div>
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>

@@ -15,17 +15,18 @@
         <br>
         <br>
         <br>
-        
         <div class="chet_gold_info">
-            <div>
+            <div class="schet2">
                 <form method="post" action="{% url 'create_account' account_type %}">
+                    <h2>Открыть Kaspi Депозит</h2>
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="открыть счет">
                 </form>
+                <br>
             </div>
         </div>
-
+        <div class="offers"></div>
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>

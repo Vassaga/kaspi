@@ -18,15 +18,9 @@
         <br>
         {% if user.is_authenticated %}
         <div class="post_head">
-           
-            <h2>МОИ ПЕРЕВОДЫ | <a href="/transfers/history/">ИСТОРИЯ</h2></a>
-
+            <h2>МОИ ПЕРЕВОДЫ | <a href="/transfers/history/">ИСТОРИЯ</a></h2>
         </div>
-
-        <div class="div_info0">
-
-        </div>
-
+        <div class="div_info0"></div>
         <div class="div_info">
             <a href="/transfers/self/"><div class="div1">
                 <div class="ico_schet"><img src="/static/images/kaspi_TransApp_ico.png"></div>
@@ -52,23 +46,20 @@
             </div>
         </div>
         {% else %}
-
         <div class="div_info">
             <div class="div1">
                 <h2>Вы не авторизованы</h2>
                 <p><a href="/bank/login/">Войти</a></p>
             </div>
         </div>
-
-
         {% endif %} 
-        
+        <div class="offers"></div>
         <div class="foot">
             <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
-        </div>    
+        </div>  
     </div>
 </body>
 </html>

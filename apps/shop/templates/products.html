@@ -20,7 +20,6 @@
         {% if products %}
             {% for product in products %}
             <a href="/shop/{{ product.pk }}/">
-
                 <div class="product">
                     <div class="product_img"><img src="/static/images/tovar_img.jpg"></div>
                     <div class="product_text">                    
@@ -29,19 +28,10 @@
                         <p>{{ product.category }}</p>
                         <H1>{{ product.price }} Т </H1>
                     </div>
-                    
                 </div>
             </a>
             {% endfor %}
         {% endif %}
-        <!-- <div class="product">
-            <hr>
-            <H1>Продукт</H1>
-            <hr>
-            <p>Стоимость: 000 тенге</p>
-            <p>Доступно: 000 шт.</p>
-            <hr>
-        </div> -->
         <div class="foot">
             <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
             <a href="/shop/catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_activ_ico.png"></div></a>
@@ -50,6 +40,5 @@
             <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>
         </div>
     </div>
-    
 </body>
 </html>

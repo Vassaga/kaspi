@@ -129,10 +129,10 @@ class PurchaseProductView(View):
         
     def post(self, request, *args, **kwargs):
         form = PurchaseCreateForm(request.POST, user=request.user)
-        print('рассрочка 01')   # удали
+        print('покапка 01')   # удали
         if request.user.is_authenticated:
             if form.is_valid():
-                print('рассрочка 02')   # удали
+                print('покупка 02')   # удали
                 user = request.user #?
                 pk = kwargs.get('pk', None)
                 product = Product.objects.get(pk=pk)

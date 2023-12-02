@@ -1,7 +1,5 @@
 
-.ALL
-{
-
+.ALL {
     height: 900px;
     width: 500px;
     background-color: rgb(219, 218, 218);
@@ -10,24 +8,21 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-
 }
 
-.head  
-{
+.head  {
     width: 500px;
     height: 90px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
-    display: flex; /* Используем flexbox внутри .head */
-    justify-content: center; /* Центрирование по вертикали */
-    align-items: center; /* Центрирование по горизонтали */
-   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
 }
 
-.search
-{
+.search {
     width: 95%;
     height: 60px;
     background-color: rgb(219, 218, 218);
@@ -37,32 +32,28 @@
     margin-top: 1px;
 }
 
-.txt_search
-{
+.txt_search {
     color: darkgrey;
     position: absolute;
     top: 30%;
     margin-left: 30px;
 }
 
-.stage1
-{
+.stage1 {
     width: 100%;
     height: 70px;
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
 }
 
-.product
-{
+.product {
     width: 100%;
     height: auto;
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
 }
 
-.foot
-{
+.foot {
     width: 500px;
     height: 110px;
     background-color: white;
@@ -72,13 +63,11 @@
     left: auto;
     right: auto;
     flex-direction: row;
-
 }
 
-.foot_1
-{
-    width: 19%; /* Задайте здесь нужную ширину вашего div */
-    height: 100%; /* Задайте здесь нужную высоту вашего div */
+.foot_1 {
+    width: 19%;
+    height: 100%;
     background-size: 100%;
     display: inline-block;
     overflow: hidden;
