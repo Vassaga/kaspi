@@ -1,7 +1,7 @@
 
 .ALL
 {
-    height: auto;
+    min-height: 800px;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -9,19 +9,19 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    z-index: 999;
 }
 
 .head  
 {
     width: 500px;
-    height: 90px;
+    height: 100px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
     display: flex; /* Используем flexbox внутри .head */
     justify-content: center; /* Центрирование по вертикали */
     align-items: center; /* Центрирование по горизонтали */
-   
 }
 
 .search
@@ -29,34 +29,97 @@
     width: 95%;
     height: 60px;
     background-color: rgb(219, 218, 218);
-    border-radius: 12px;
+    /* border-radius: 12px; */
     position: relative;
     text-align: left;
     margin-top: 1px;
+    display: flex;
+    align-items: center;
 }
 
-.txt_search
-{
-    color: darkgrey;
-    position: absolute;
-    top: 30%;
-    margin-left: 30px;
+.search div {
+    margin: 0 0px; /* Примерные отступы между элементами */
 }
 
-.stage1
-{
-    width: 100%;
-    height: 70px;
-    background-color: rgb(255, 255, 255);
+.a001 img {
+    width: 100%; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
+    margin-top: 10px;
+}
+.a002 img {
+    width: 105%; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
     margin-top: 10px;
 }
 
-.category
+
+.stage1
 {
     width: 100%;
     height: auto;
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
+}
+
+.product {
+    display: flex;
+    align-items: stretch; /* Делаем блоки одинаковой высоты */
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 4px;
+}
+
+.product_img {
+    flex: 0 0 auto; /* Не увеличивать размер блока */
+    width: 33%;
+    display: flex; /* Изменено */
+    align-items: center; /* Изменено */
+}
+
+.product_img img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product_text {
+    flex: 1; /* Занимать оставшееся пространство */
+    padding-left: 10px; /* Примерный внутренний отступ */
+}
+
+.product h1 {
+    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
+    font-size: 24px; /* Измените размер шрифта по вашему желанию */
+    font-weight: bold; /* Укажите желаемый вес шрифта */
+    /* Дополнительные свойства */
+    color: #333; /* Цвет текста */
+    /* Другие свойства, если необходимо */
+}
+
+
+.product p {
+    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
+    font-size: 16px; /* Измените размер шрифта по вашему желанию */
+    font-weight: normal; /* Укажите желаемый вес шрифта */
+    /* Дополнительные свойства */
+    color: #333; /* Цвет текста */
+    /* Другие свойства, если необходимо */
+}
+
+a {
+    text-decoration: none;
+  }
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-family: Arial, sans-serif;
 }
 
 .foot
@@ -66,11 +129,6 @@
     width: 500px;
     height: 110px;
     background-color: white;
-    /* display: inline-block; */
-    /* position: fixed; */
-    /* top: 650px; */
-    left: auto;
-    right: auto;
     flex-direction: row;
 }
 

@@ -72,7 +72,7 @@
     width: 100%;
     height: 200px;
     background-color: rgb(255, 255, 255);
-    margin-top: 10px;
+    margin-top: 5px;
     box-sizing: border-box;
     flex-direction: column;
 }
@@ -99,13 +99,54 @@
     vertical-align: bottom;
 }
 
-.product
-{
+.product {
+    display: flex;
+    align-items: stretch; /* Делаем блоки одинаковой высоты */
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 4px;
+}
+
+.product_img {
+    flex: 0 0 auto; /* Не увеличивать размер блока */
+    width: 33%;
+    display: flex; /* Изменено */
+    align-items: center; /* Изменено */
+}
+
+.product_img img {
     width: 100%;
     height: auto;
-    background-color: rgb(255, 255, 255);
-    margin-top: 10px;
+    display: block;
 }
+
+.product_text {
+    flex: 1; /* Занимать оставшееся пространство */
+    padding-left: 10px; /* Примерный внутренний отступ */
+}
+
+.product h1 {
+    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
+    font-size: 24px; /* Измените размер шрифта по вашему желанию */
+    font-weight: bold; /* Укажите желаемый вес шрифта */
+    /* Дополнительные свойства */
+    color: #333; /* Цвет текста */
+    /* Другие свойства, если необходимо */
+}
+
+
+.product p {
+    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
+    font-size: 16px; /* Измените размер шрифта по вашему желанию */
+    font-weight: normal; /* Укажите желаемый вес шрифта */
+    /* Дополнительные свойства */
+    color: #333; /* Цвет текста */
+    /* Другие свойства, если необходимо */
+}
+
+a {
+    text-decoration: none;
+  }
 
 .offers
 {

@@ -22,7 +22,6 @@
     display: flex; /* Используем flexbox внутри .head */
     justify-content: center; /* Центрирование по вертикали */
     align-items: center; /* Центрирование по горизонтали */
-   
 }
 
 .search
@@ -51,13 +50,6 @@
     height: auto; /* Поддержание соотношения сторон */
 }
 
-.txt_search
-{
-    color: darkgrey;
-    position: absolute;
-    top: 30%;
-    margin-left: 30px;
-}
 
 .stage1
 {
@@ -115,11 +107,6 @@ a {
     width: 500px;
     height: 110px;
     background-color: white;
-    /* display: inline-block; */
-    /* position: fixed; */
-    /* top: 650px; */
-    left: auto;
-    right: auto;
     flex-direction: row;
 }
 

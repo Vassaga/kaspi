@@ -9,32 +9,28 @@
 <body>
     <div class="ALL">
         <div class="head">
-            <a href="/shop/catalog/"><div class="back_point"></div></a>
-            <div class="My_Bank"></div>
+            <div class="search">
+                <a href="/shop/"><div class="a001"><img src="/static/images/kaspi_backpoint2_ico.png"></div></a>
+                <div class="a002"><img src="/static/images/kaspi_Search_fake.png"></div>
+            </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+        <div class="offer1"></div>
         {% if user.is_authenticated %}
         <div class="post_head">
-           
             {% if messages %}
-                <ul class="messages">
+                <div class="messages">
                     {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        <br>
+                        <h2{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h2>
                     {% endfor %}
-                </ul>
+                </div>
             {% endif %}
-
         </div>
-
-
         {% endif %} 
-        
+        <div class="offer2"></div>
         <div class="foot">
             <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_no_activ_ico.png"></div></a>
-            <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
+            <a href="/shop/catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>
             <div class="foot_1"><img src="/static/images/kaspi_izbranoe_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_trash_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_zakazy_no_activ_ico.png"></div>

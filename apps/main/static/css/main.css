@@ -2,7 +2,7 @@
 .ALL
 {
 
-    height: auto;
+    min-height: 800px;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -23,7 +23,6 @@
     display: flex; /* Используем flexbox внутри .head */
     justify-content: center; /* Центрирование по вертикали */
     align-items: center; /* Центрирование по горизонтали */
-   
 }
 
 .search
@@ -48,7 +47,7 @@
 .stage1
 {
     width: 100%;
-    height: 190px;
+    height: 250px;
     background-color: rgb(255, 255, 255);
     margin-top: 90px;
 }
@@ -64,26 +63,25 @@
 .apps
 {
     width: 100%;
-    height: 190px;
+    height: auto;
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
-    box-sizing: border-box;
-    flex-direction: column;
+    display: flex; /* Изменено */
+    flex-direction: column; /* Изменено */
 }
 
 .app_stage
 {
     width: 100%;
-    height: 50%;
     box-sizing: border-box;
-    flex-direction: row;
+    display: flex; /* Изменено */
+    flex-direction: row; /* Изменено */
 }
 
 .app
 {
-    width: 68px;
-    height: 68px;
-
+    width: auto;
+    height: auto;
     display: inline-block;
     margin-left: 24px;
     margin-right: 24px;

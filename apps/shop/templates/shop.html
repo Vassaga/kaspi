@@ -10,7 +10,7 @@
     <div class="ALL">
         <div class="head">
             <div class="search">
-                <a href="/shop/"><div class="a001"><img src="/static/images/kaspi_backpoint2_ico.png"></div></a>
+                <a href="/"><div class="a001"><img src="/static/images/kaspi_backpoint2_ico.png"></div></a>
                 <div class="a002"><img src="/static/images/kaspi_Search_fake.png"></div>
             </div>
         </div>
@@ -38,20 +38,19 @@
         </div>
         {% if products %}
             {% for product in products %}
-                <a href="/shop/{{ product.pk }}/"><div class="product">
-                    <hr>
-                    <H1>{{ product.name }}</H1>
-                    <hr>
-                    <p>Стоимость: {{ product.price }} тенге</p>
-                    <p>Доступно: {{ product.quantity }} шт.</p>
-                    <hr>
-                </div></a>
+            <a href="/shop/{{ product.pk }}/">
+                <div class="product">
+                    <div class="product_img"><img src="/static/images/tovar_img.jpg"></div>
+                    <div class="product_text">                    
+                        <H1>{{ product.name }}</H1>
+                        <hr>
+                        <p>{{ product.category }}</p>
+                        <H1>{{ product.price }} Т </H1>
+                    </div>
+                </div>
+            </a>
             {% endfor %}
         {% endif %}
-        <div class="product">
-            <H1>Продукт</H1>
-            <p>Цена</p>
-        </div>
         <div class="foot">
             <a href="/shop/"><div class="foot_1"><img src="/static/images/kaspi_shop_activ_ico.png"></div></a>
             <a href="catalog/"><div class="foot_1"><img src="/static/images/kaspi_catalog_no_activ_ico.png"></div></a>

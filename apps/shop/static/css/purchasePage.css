@@ -1,6 +1,6 @@
 .ALL
 {
-    height: 900px;
+    height: auto;
     width: 500px;
     background-color: rgb(219, 218, 218);
     margin-left: auto;
@@ -8,114 +8,95 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-
+    
 }
+
 
 .head  
 {
     width: 500px;
-    height: 85px;
+    height: 100px;
     position: fixed;
     top: 0;
     background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
-    flex-direction: row;
-    
+    display: flex; /* Используем flexbox внутри .head */
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+    z-index: 999;
 }
 
-.back_point
+.search
 {
-    display: inline-block;
-    height: 100%;
-    width: 80px;
-    background-image: url("/static/images/kaspi_backpoint_ico.png");
-    background-size: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-}
-
-.My_Bank
-{
-    display: inline-block;
-    height: 100%;
-    width: 414px;
-    background-image: url("/static/images/MyBankHead.png");
-    background-size: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-}
-
-.post_head
-{
-    width: 500px;
+    width: 95%;
     height: 60px;
-    position: fixed;
-    top: 86px;
-    background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
-    flex-direction: row;
-}
-
-.div_info0
-{
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    margin-top: 66px;
+    background-color: rgb(219, 218, 218);
+    /* border-radius: 12px; */
+    position: relative;
+    text-align: left;
+    margin-top: 1px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
-.div_info
+.search div {
+    margin: 0 0px; /* Примерные отступы между элементами */
+}
+
+.a001 {
+    width: 70px; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
+}
+.a002 {
+    width: 80%; /* Укажите требуемую ширину */
+    height: auto; /* Поддержание соотношения сторон */
+}
+
+
+.offer1
 {
     width: 100%;
+    height: 100px;
     background-color: rgb(255, 255, 255);
-    margin-top: 2px;
-    display: flex;
-    flex-direction: column;
+    margin-top: 0px;
+    /* box-sizing: border-box; */
 }
 
 
-.div1
+.messages
 {
-    display: inline-block;
     width: 100%;
-    height: 100px;
-    flex-direction: row;
+    height: 200px;
+    background-color: rgb(116, 235, 92);
+    margin-top: 0px;
 }
 
+.messages h2 {
+    font-family: "Arial Unicode MS", sans-serif; /* Замените "Arial" на нужный вам шрифт */
+    font-size: 24px; /* Измените размер шрифта по вашему желанию */
+    font-weight: bold; /* Укажите желаемый вес шрифта */
+    /* Дополнительные свойства */
+    color: #333333; /* Цвет текста */
+    text-align: center;
+    /* Другие свойства, если необходимо */
+}
 
-.ico_schet
+.offer2
 {
-    display: inline-block;
-    width: 120px;
-    height: 100px;
+    width: 100%;
+    height: 800px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0px;
+    /* box-sizing: border-box; */
 }
 
-.schet
-{
-    display: inline-block;
-    width: 370px;
-    height: 100px;
-    vertical-align: bottom;
-}
 .foot
 {
+    position: sticky;
+    bottom: 0;
     width: 500px;
     height: 110px;
     background-color: white;
-    display: inline-block;
-    position: fixed;
-    top: 650px;
-    left: auto;
-    right: auto;
     flex-direction: row;
-
 }
 
 .foot_1
