@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/shop.css">
+    <link rel="icon" href="/static/images/favicon.png" type="image/x-icon">
+    <style>html { background-color: rgb(235, 235, 235);}</style>
     <title>Каспи магазин</title>
 </head>
 <body>
@@ -15,10 +17,36 @@
             </div>
         </div>
         <div class="stage1">
-            <div class="stage2_stage"></div>
-            <div class="stage2_stage"></div>
+            <div class="scrolling-wrapper">
+                <img src="/static/images/offer01.png" alt="Image 1">
+                <img src="/static/images/offer02.png" alt="Image 2">
+                <img src="/static/images/offer03.png" alt="Image 3">
+                <img src="/static/images/offer04.png" alt="Image 4">
+                <img src="/static/images/offer05.png" alt="Image 5">
+                <img src="/static/images/offer06.png" alt="Image 6">
+                <img src="/static/images/offer07.png" alt="Image 7">
+            </div>
         </div>
-        <div class="stage2">
+        {% if products %}
+        <div class="stage3">
+            <div class="scrolling-wrapper3">
+                {% for product in products %}
+                <a href="/shop/{{ product.pk }}/">
+                    <div class="product3">
+                        <div class="product_img3"><img src="/static/images/tovar_img.jpg"></div>
+                        <div class="product_text3">                    
+                            <h1>{{ product.name }}</h1>
+                            <hr>
+                            <p>{{ product.category }}, рейтинг: {{ product.rating }}</p>
+                            <h1>{{ product.price }} Т </h1>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <!-- <div class="stage2">
             <div class="stage2_stage">
                 <div class="stage" id="app1"><a href="QR/"><img src="/static/images/kaspi_MyBankapp_ico.png"></a></div>
                 <div class="stage" id="app2"><a href="bank/"><img src="/static/images/kaspi_MyBankapp_ico.png"></a></div>
@@ -31,6 +59,12 @@
                 <div class="stage" id="app7"><a href="QR/"><img src="/static/images/kaspi_MyBankapp_ico.png"></a></div>
                 <div class="stage" id="app8"><a href="QR/"><img src="/static/images/kaspi_MyBankapp_ico.png"></a></div>
             </div>
+        </div> -->
+        <div class="apple">
+            <img src="/static/images/apple.png" alt="apple">
+        </div>
+        <div class="nedavno">
+            <img src="/static/images/nedavno.png" alt="nedavno">
         </div>
         {% if products %}
             {% for product in products %}

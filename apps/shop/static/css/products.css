@@ -37,16 +37,14 @@
     margin: 0 0px;
 }
 
-.a001 img {
-    width: 100%;
+.a001 {
+    width: 70px;
     height: auto;
-    margin-top: 10px;
 }
 
-.a002 img {
-    width: 105%;
+.a002 {
+    width: 80%;
     height: auto;
-    margin-top: 10px;
 }
 
 .stage1 {
@@ -72,7 +70,7 @@
 }
 
 .product_img img {
-    width: 100%;
+    width: 80%;
     height: auto;
     display: block;
 }

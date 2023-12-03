@@ -56,16 +56,82 @@
 
 .stage1 {
     width: 100%;
-    height: 110px;
+    height: auto;
+    padding-top: 90px;
+    overflow: hidden; /* Скрываем выходящее за пределы изображений */
+}
+
+.scrolling-wrapper {
+    display: flex;
+    animation: scroll 30s linear infinite; /* Прокрутка за 10 секунд */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%); /* Прокрутка на один блок изображения */
+    }
+}
+
+.stage3 {
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.scrolling-wrapper3 {
+    display: inline-flex;
+    flex-wrap: nowrap;
+}
+
+.product3 {
+    display: flex;
+    align-items: stretch;
+    width: 450px;
     background-color: rgb(255, 255, 255);
-    margin-top: 90px;
+    margin-top: 4px;
+}
+
+.product_img3 {
+    flex: 0 0 auto;
+    width: 45%;
+    display: flex;
+    align-items: center;
+}
+
+.product_img3 img {
+    padding-left: 10px;
+    width: 80%;
+    height: auto;
+    display: block;
+}
+
+.product_text3 {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.product3 h1 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.product3 p {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
 }
 
 .stage2 {
     width: 100%;
     height: 200px;
     background-color: rgb(255, 255, 255);
-    margin-top: 5px;
+    margin-top: 2px;
     box-sizing: border-box;
     flex-direction: column;
 }
@@ -89,6 +155,24 @@
     vertical-align: bottom;
 }
 
+.apple {
+    margin-top: 2px;
+}
+
+.apple img {
+    width: 500px;
+    height: auto;
+}
+
+.nedavno {
+    margin-top: 2px;
+}
+
+.nedavno img {
+    width: 500px;
+    height: auto;
+}
+
 .product {
     display: flex;
     align-items: stretch;
@@ -105,7 +189,8 @@
 }
 
 .product_img img {
-    width: 100%;
+    padding-left: 10px;
+    width: 80%;
     height: auto;
     display: block;
 }

@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/bank.css">
-    <title>Kaspi_REG</title>
+    <link rel="icon" href="/static/images/favicon.png" type="image/x-icon">
+    <title>Мой банк</title>
+    <style>
+        html { background-color: rgb(235, 235, 235);}
+        .ALL {min-height: 1080px; width: 500px; background-color: rgb(219, 218, 218); margin-left: auto; margin-right: auto; display: flex; flex-direction: column; box-sizing: border-box;}
+        .head  {width: 500px; height: 85px; position: fixed; top: 0; background-color: rgb(255, 255, 255); box-sizing: border-box; flex-direction: row;}
+        .back_point {display: inline-block; height: 100%; width: 80px; background-image: url("/static/images/kaspi_backpoint_ico.png"); background-size: no-repeat; background-position: center; background-size: cover; margin-left: 0px; margin-right: 0px; margin-top: 0px;}
+        .My_Bank {display: inline-block;height: 100%; width: 414px; background-image: url("/static/images/MyBankHead.png"); background-size: no-repeat; background-position: center; background-size: cover; margin-left: 0px; margin-right: 0px; margin-top: 0px;}
+        .reg {width: auto; height: 900px; background-color: rgb(255, 255, 255); padding-left: 20px; margin-top: 80px; display: flex; flex-direction: column;font-family: "Arial Unicode MS", sans-serif; font-size: 24px; font-weight: bold; color: #333;}
+        .foot {position: sticky; bottom: 0; width: 500px; height: 110px; background-color: white; left: auto; right: auto; flex-direction: row;}
+        .foot_1 {width: 100px; height: 100px; display: inline-block; margin-left: 10px; margin-right: 10px; position: relative;}
+    </style>
 </head>
 <body>
     <div class="ALL">
@@ -12,13 +22,9 @@
             <a href="/"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
-        <div class="chet_gold_info">
+        <div class="reg">
             <div>
-                <br>
-                <br>
-                <br>
-                <br>
-                    <h2> РЕГИСТРАЦИЯ </h2>
+                <h2> РЕГИСТРАЦИЯ </h2>
                 <form action="/reg/" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
@@ -32,11 +38,7 @@
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
-        </div>    
+        </div>
     </div>
-</body>
-
-
-
 </body>
 </html>
