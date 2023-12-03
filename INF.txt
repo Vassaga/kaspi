@@ -22,6 +22,12 @@ git status
 git add .
 git commit -m "_______________"
 git push origin main
+
+
+объеденяем ветки: 
+git checkout master
+git merge test
+
 ---------------------------------------------
 git init
 git add README.md
