@@ -6,14 +6,15 @@
     <link rel="stylesheet" href="/static/css/bank.css">
     <style>
     html { background-color: rgb(235, 235, 235);}
-    .transfer {padding-left: 20px; width: auto;}
+    .transfer p {padding-left: 20px; width: auto; font-family: "Arial Unicode MS", sans-serif; font-size: 24px; font-weight: bold; color: #333;}
+    a {text-decoration: none;}
     </style>
     <title>Переводы</title>
 </head>
 <body>
     <div class="ALL">
         <div class="head">
-            <a href="/transfers/any/choice/"><div class="back_point"></div></a>
+            <a href="/transfers"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
         <br>
@@ -22,12 +23,8 @@
         <br>
         <div class="transfer">
             <div>
-                <form method="post" action="/transfers/any/choice/2/">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="ПЕРЕВЕСТИ">
-                </form>
-                <br>
+                <a href="/transfers/any/choice/1/"><p>По номеру телефона клиента</p></a>
+                <a href="/transfers/any/choice/2/"><p>По номеру счета клиента</p></a>
             </div>
         </div>
         <div class="offers"></div>

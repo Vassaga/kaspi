@@ -18,60 +18,70 @@
         <br>
         <br>
         {% if user.is_authenticated %}
-        <div class="chet_gold_info">
-            {% if Gold_accounts %}
-                {% for account in Gold_accounts %}
-                <div class="chet_gold">
-                    <div class="ico_schet"><img src="/static/images/kaspi_card_small_ico.png"></div>
-                    <div class="schet"><h2>Kaspi Gold {{ account.balance }} {{ account.currency }}</h2></div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <a href="/bank/create_account/gold/"><div class="chet_gold">
-                    <div class="ico_red"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="open_schet"><h2>Открыть Kaspi Gold</h2></div>
+            {% if inst  %}
+                <a href="/bank/user_insts/"><div class="inst">
+                    <h2>Оплатить рассрочку</h2>
+                    <p>Количество рассрочек: {{ inst|length }}</p>
+                    {% if badinst  %}
+                        <p>Количество просроченых рассрочек: {{ badinst|length }}</p>
+                        <br>
+                    {% endif %}
                 </div></a>
             {% endif %}
-            <div>
-                <div class="ico_schet"><img src="/static/images/kaspi_add_ico.png"></div>
-                <div class="open_schet"><h2>Оформить Kaspi Gold на ребенка</h2></div>
-            </div>
-        </div>
-        <div class="chet_red_info">
-            {% if Red_accounts %}
-                {% for account in Red_accounts %}
-                <div class="chet_red">
-                    <div class="ico_red"><img src="/static/images/kaspi_RED_ico.png"></div>
-                    <div class="red"><h2>Kaspi Red {{ account.balance }} {{ account.currency }}</h2></div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <a href="/bank/create_account/red/"><div class="chet_red">
+            <div class="chet_gold_info">
+                {% if Gold_accounts %}
+                    {% for account in Gold_accounts %}
+                    <div class="chet_gold">
+                        <div class="ico_schet"><img src="/static/images/kaspi_card_small_ico.png"></div>
+                        <div class="schet"><h2>Kaspi Gold {{ account.balance }} {{ account.currency }}</h2></div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <a href="/bank/create_account/gold/"><div class="chet_gold">
                         <div class="ico_red"><img src="/static/images/kaspi_add_ico.png"></div>
-                        <div class="open_schet"><h2>Открыть Kaspi Red</h2></div>
+                        <div class="open_schet"><h2>Открыть Kaspi Gold</h2></div>
                     </div></a>
-            {% endif %}
-        </div>
-        <div class="chet_deposit_info">
-            {% if Dep_accounts %}
-                {% for account in Dep_accounts %}
-                <div class="chet_deposit">
-                    <div class="ico_deposit"><img src="/static/images/kaspi_D_ico.png"></div>
-                    <div class="deposit"><h2>Депозит {{ account.balance }} {{ account.currency }}</h2></div>
+                {% endif %}
+                <div>
+                    <div class="ico_schet"><img src="/static/images/kaspi_add_ico.png"></div>
+                    <div class="open_schet"><h2>Оформить Kaspi Gold на ребенка</h2></div>
                 </div>
-                {% endfor %}
-                <a href="/bank/create_account/dep/"><div>
-                    <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
-                </div></a>
-            {% else %}            
-                <a href="/bank/create_account/dep/"><div>
-                    <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
-                    <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
-                </div></a>
-            {% endif %}
-        </div>
-        {% else %}
+            </div>
+            <div class="chet_red_info">
+                {% if Red_accounts %}
+                    {% for account in Red_accounts %}
+                    <div class="chet_red">
+                        <div class="ico_red"><img src="/static/images/kaspi_RED_ico.png"></div>
+                        <div class="red"><h2>Kaspi Red {{ account.balance }} {{ account.currency }}</h2></div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <a href="/bank/create_account/red/"><div class="chet_red">
+                            <div class="ico_red"><img src="/static/images/kaspi_add_ico.png"></div>
+                            <div class="open_schet"><h2>Открыть Kaspi Red</h2></div>
+                        </div></a>
+                {% endif %}
+            </div>
+            <div class="chet_deposit_info">
+                {% if Dep_accounts %}
+                    {% for account in Dep_accounts %}
+                    <div class="chet_deposit">
+                        <div class="ico_deposit"><img src="/static/images/kaspi_D_ico.png"></div>
+                        <div class="deposit"><h2>Депозит {{ account.balance }} {{ account.currency }}</h2></div>
+                    </div>
+                    {% endfor %}
+                    <a href="/bank/create_account/dep/"><div>
+                        <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
+                        <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
+                    </div></a>
+                {% else %}            
+                    <a href="/bank/create_account/dep/"><div>
+                        <div class="ico_deposit"><img src="/static/images/kaspi_add_ico.png"></div>
+                        <div class="open_schet"><h2>Открыть Kaspi Депозит</h2></div>
+                    </div></a>
+                {% endif %}
+            </div>
+            {% else %}
         {% endif %} 
         <div class="offers"></div>
         <div class="foot">

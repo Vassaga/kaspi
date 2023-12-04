@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/bank.css">
+    <title>Мой банк</title>
+    <style>html { background-color: rgb(235, 235, 235);}</style>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/bank/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+            {% if inst %}
+            <div class="userinst">
+                {% for i in inst %}
+                    <div class="userinst2">
+                        <h3>Наименование покупки - {{ i.product }}</h3>
+                        <h2>Сумма к оплате: {{ i.monthly_payment }} Т</h2>
+                        <p>Дата покупки: {{ i.purchase_date }}</p>
+                        <p>Дата следующего списания: {{ i.next_pay_date }}</p>
+                        <p>Оставшаяся сумма: {{ i.remaining_amount }} Т</p>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}  
+        {% endif %} 
+        <div class="offers"></div>
+        <div class="foot">
+            <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>

@@ -46,6 +46,41 @@
     margin-top: 0px;
 }
 
+.inst {
+    max-width: 500px;
+    height: auto;
+    background-color: rgb(116, 235, 92);
+    margin-top: 5px;
+    padding-left: 10px;
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.userinst {
+    max-width: 500px;
+    height: auto;
+    margin-top: 5px;
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.userinst2 {
+    max-width: 500px;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    margin-top: 5px;
+    padding: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
 .chet_gold_info {
     width: 100%;
     background-color: rgb(255, 255, 255);

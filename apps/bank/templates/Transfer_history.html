@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bank.css">
-    <style>html { background-color: rgb(235, 235, 235);}</style>
+    <style>
+        html { background-color: rgb(235, 235, 235);}
+        .chet_gold {margin-top: 2px; font-family: "Arial Unicode MS", sans-serif; font-size: 14px; font-weight: bold; color: #333;}
+        .ico_schet {padding-left: 10px; width: auto;}
+        .ico_schet img {padding-top: 20px;}
+    </style>
     <title>История переводов</title>
 </head>
 <body>
     <div class="ALL">
         <div class="head">
-            <a href="/"><div class="back_point"></div></a>
+            <a href="/transfers/"><div class="back_point"></div></a>
             <div class="My_Bank"></div>
         </div>
         <br>
@@ -24,12 +29,12 @@
                 <div class="chet_gold">
                     <div class="ico_schet">
                         <img src="/static/images/kaspi_TransAnoverHistory_ico.png">
-                        <p>ФИО контр-та</p>
                     </div>
                     <div class="schet">
-                        <p>{{ transfer.datetime }} сумма {{ transfer.outamount }} {{ transfer.outaccount.currency }}</p>
-                        <p>со счета своего {{ transfer.outaccount.type}} на счет {{ transfer.inaccount.owner.fio }} {{ transfer.inaccount.type }}</p>
+                        <p>ПЕРЕВОД {{ transfer.datetime }} </p>
+                        <p>{{ transfer.outamount }} {{ transfer.outaccount.currency }} со своего счета {{ transfer.outaccount.type}} на счет {{ transfer.inaccount.owner.fio }} {{ transfer.inaccount.type }}</p>
                         <p>остаток на счете {{ transfer.outbalance }} </p>
+                        
                     </div>
                 </div>
                 <br>

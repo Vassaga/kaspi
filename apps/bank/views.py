@@ -8,14 +8,16 @@ from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.db.models import Q
+from django.utils import timezone
 # Create your views here.
 
 from auths.models import MyUser
 from bank.models import BankAccount, Transfer
 from bank.forms.create_bankaccount import BankAccountForm
 from bank.forms.TransferSelfBankAccForm import TransferSelfForm
-from bank.forms.TransferAnyBankAccForm import TransferAnyForm
+from bank.forms.TransferAnyBankAccForm import TransferAnyFormByIBAN, TransferAnyFormByNumber
 from bank.currency_converter import currency_converter
+from shop.models import Purchase
 
 
 class BankMainPageView(View):
@@ -29,11 +31,20 @@ class BankMainPageView(View):
             Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
             Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
             Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
+            Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0)
+            BadInst = Purchase.objects.filter(
+                user=user,
+                next_pay_date__lte=timezone.now()
+            )
+            print(Inst)
+            print(BadInst)
             return render(
                 template_name='bank.html',
                 request=request,
                 context = {
                     'user': user,
+                    'inst': Inst,
+                    'badinst': BadInst,
                     'Gold_accounts': Gold_accounts,
                     'Dep_accounts' : Dep_accounts,
                     'Red_accounts' : Red_accounts
@@ -157,9 +168,7 @@ class TransfersHistoryView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             user = request.user   
-            # Transfers = Transfer.objects.filter(owner=user).order_by('owner')
-            # Transfers = Transfer.objects.filter(outaccount__owner=user, inaccount__owner=user)
-            Transfers = Transfer.objects.filter(Q(outaccount__owner=user) | Q(inaccount__owner=user))
+            Transfers = Transfer.objects.filter(Q(transaction_type='Transfer') & Q(outaccount__owner=user)).order_by('-datetime')
             return render(
                 template_name = 'Transfer_history.html',
                 request=request,
@@ -172,28 +181,38 @@ class TransfersHistoryView(View):
             return redirect('login/')
         
 
-class TransferAnyBankAccountsView(View):
+class TransferAnyChoicePageView(View):
+
+    """ СТРАННИЦА ВЫБОРА ПЕРЕВОДА ДЛЯ КЛИЕНТА КАСПИ. """
+
+    template_name = 'TransferAnyChoice.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class TransferAnyBankAccountsViewByNumber(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ НА СЧЕТ ДРУГОГО КЛИЕНТА КАСПИ. """
 
-    template_name = 'TransferAnyBankAccounts.html'
+    template_name = 'TransferAnyBankAccounts1.html'
 
     def get(self, request):
-        form = TransferAnyForm(user=request.user)
+        form = TransferAnyFormByNumber(user=request.user)
         return render(request, self.template_name, {'form': form})
     
     def post(self, request, *args, **kwargs):
-        form = TransferAnyForm(request.POST)
+        form = TransferAnyFormByNumber(request.POST)
         user = request.user
         if form.is_valid():
             outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
-            inaccount = form.cleaned_data['inaccount']
+            inaccount = form.cleaned_data['inaccount'][0]
+            print(inaccount)
             inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
             try:
                 if outaccount.balance < outamount:
                     messages.error(request, 'Недостаточно средств на счете списания.')
-                    return redirect('success/')
+                    return redirect('/transfers/any/success/')
                 else:
                     inaccount.balance += inamount
                     outaccount.balance -= outamount
@@ -214,6 +233,73 @@ class TransferAnyBankAccountsView(View):
                 # Обработка исключений
                 pass
             messages.success(request, 'Транзакция успешно выполнена.')        
-            return redirect('success/')
+            return redirect('/transfers/any/success/')
         return render(request, self.template_name, {'form': form})
     
+class TransferAnyBankAccountsViewByIBAN(View):
+
+    """ СТРАННИЦА ПЕРЕВОДОВ НА СЧЕТ ДРУГОГО КЛИЕНТА КАСПИ. """
+
+    template_name = 'TransferAnyBankAccounts.html'
+
+    def get(self, request):
+        form = TransferAnyFormByIBAN(user=request.user)
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = TransferAnyFormByIBAN(request.POST)
+        user = request.user
+        if form.is_valid():
+            outamount = form.cleaned_data['outamount']
+            outaccount = form.cleaned_data['outaccount']
+            inaccount = form.cleaned_data['inaccount'][0]
+            print(len(inaccount))
+            inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
+            try:
+                if outaccount.balance < outamount:
+                    messages.error(request, 'Недостаточно средств на счете списания.')
+                    return redirect('/transfers/any/success/')
+                else:
+                    inaccount.balance += inamount
+                    outaccount.balance -= outamount
+                    outaccount.save()
+                    inaccount.save()
+                    incurrency = inaccount.currency
+                    outcurrency = outaccount.currency
+                    Transfer.objects.create(
+                         outaccount=outaccount, 
+                         inaccount=inaccount,
+                         outamount=outamount, 
+                         inamount=inamount,
+                         outcurrency=outcurrency,
+                         incurrency=incurrency,
+                         outbalance=outaccount.balance,
+                         inbalance=inaccount.balance)
+            except:
+                # Обработка исключений
+                pass
+            messages.success(request, 'Транзакция успешно выполнена.')        
+            return redirect('/transfers/any/success/')
+        return render(request, self.template_name, {'form': form})
+    
+
+class UserInstsView(View):
+
+    """ СТРАННИЦА РАССРОЧЕК ПОЛЬЗОВАТЕЛЯ. """
+    template_name = 'UserInsts.html'
+
+    def get(self, request):
+        user = request.user
+        Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0)
+        BadInst = Purchase.objects.filter(
+            user=user,
+            next_pay_date__lte=timezone.now()
+        )
+        return render(
+            request, 
+            self.template_name, 
+            context = {
+                'user': user,
+                'inst': Inst,
+                'badinst': BadInst,
+            })
