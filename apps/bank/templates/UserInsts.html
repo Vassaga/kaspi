@@ -27,6 +27,11 @@
                         <p>Дата покупки: {{ i.purchase_date }}</p>
                         <p>Дата следующего списания: {{ i.next_pay_date }}</p>
                         <p>Оставшаяся сумма: {{ i.remaining_amount }} Т</p>
+                        <form action="/bank/user_insts/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="data" value='{"key1": "{{i.pk}}", "key2": "{{i.monthly_payment}}"}'>
+                            <button type="submit">Оплатить ежемесячный платеж</button>
+                        </form>
                     </div>
                 {% endfor %}
             </div>

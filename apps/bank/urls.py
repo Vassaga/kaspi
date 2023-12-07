@@ -18,6 +18,7 @@ from bank.views import (
 urlpatterns = [
     path('transfers/self/success/', TransferSuccessView.as_view()),
     path('transfers/any/success/', TransferSuccessView.as_view()),
+    path('transfers/success/', TransferSuccessView.as_view()),
     path('transfers/self/', TransferSelfBankAccountsView.as_view()),
     path('transfers/any/choice/1/', TransferAnyBankAccountsViewByNumber.as_view()),
     path('transfers/any/choice/2/', TransferAnyBankAccountsViewByIBAN.as_view()),

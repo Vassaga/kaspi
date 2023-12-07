@@ -1,6 +1,10 @@
 
 ''' BANK VIEWS '''
 
+import json
+
+from decimal import Decimal
+
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http.request import HttpRequest
@@ -36,8 +40,6 @@ class BankMainPageView(View):
                 user=user,
                 next_pay_date__lte=timezone.now()
             )
-            print(Inst)
-            print(BadInst)
             return render(
                 template_name='bank.html',
                 request=request,
@@ -207,12 +209,11 @@ class TransferAnyBankAccountsViewByNumber(View):
             outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
             inaccount = form.cleaned_data['inaccount'][0]
-            print(inaccount)
             inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
             try:
                 if outaccount.balance < outamount:
                     messages.error(request, 'Недостаточно средств на счете списания.')
-                    return redirect('/transfers/any/success/')
+                    return redirect('/transfers/success/')
                 else:
                     inaccount.balance += inamount
                     outaccount.balance -= outamount
@@ -233,7 +234,7 @@ class TransferAnyBankAccountsViewByNumber(View):
                 # Обработка исключений
                 pass
             messages.success(request, 'Транзакция успешно выполнена.')        
-            return redirect('/transfers/any/success/')
+            return redirect('/transfers/success/')
         return render(request, self.template_name, {'form': form})
     
 class TransferAnyBankAccountsViewByIBAN(View):
@@ -253,12 +254,11 @@ class TransferAnyBankAccountsViewByIBAN(View):
             outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
             inaccount = form.cleaned_data['inaccount'][0]
-            print(len(inaccount))
             inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
             try:
                 if outaccount.balance < outamount:
                     messages.error(request, 'Недостаточно средств на счете списания.')
-                    return redirect('/transfers/any/success/')
+                    return redirect('/transfers/success/')
                 else:
                     inaccount.balance += inamount
                     outaccount.balance -= outamount
@@ -279,7 +279,7 @@ class TransferAnyBankAccountsViewByIBAN(View):
                 # Обработка исключений
                 pass
             messages.success(request, 'Транзакция успешно выполнена.')        
-            return redirect('/transfers/any/success/')
+            return redirect('/transfers/success/')
         return render(request, self.template_name, {'form': form})
     
 
@@ -291,15 +291,60 @@ class UserInstsView(View):
     def get(self, request):
         user = request.user
         Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0)
-        BadInst = Purchase.objects.filter(
-            user=user,
-            next_pay_date__lte=timezone.now()
-        )
+        # BadInst = Purchase.objects.filter(user=user, remaining_amount__gt=0, next_pay_date__lte=timezone.now())
+        # print(len(BadInst))
         return render(
             request, 
             self.template_name, 
             context = {
                 'user': user,
                 'inst': Inst,
-                'badinst': BadInst,
+                # 'badinst': BadInst,
             })
+
+    def post(self, request, *args, **kwargs):
+        # data = request.POST.get('monthly_payment')
+        user = request.user
+        data = request.POST.get('data')
+        data_dict = json.loads(data) if data else {}
+        try:
+            value1 = data_dict.get('key1')
+            value2 = data_dict.get('key2')
+            purchase=Purchase.objects.get(pk=value1)
+            print(value1, value2, purchase)
+            outaccount = BankAccount.objects.get(iban=purchase.iban)
+            inaccount = BankAccount.objects.get(iban='1234123412341234') # МАГАЗИН продумай - ибан банка изменится в другой базе
+            amount = Decimal(value2)
+            converted_amount = currency_converter(amount, 'KZT', outaccount.currency)
+            print(outaccount)
+            print(outaccount.balance)
+            print('001')
+            print(type(amount))
+            if outaccount.balance < converted_amount:
+                messages.error(request, 'Недостаточно средств на счету')
+                return redirect('/transfers/success/')
+            else:
+                print('002')
+                outaccount.balance -= converted_amount
+                print('003')
+                outaccount.save()
+                purchase.remaining_amount -= amount
+                purchase.next_pay_date += timezone.timedelta(minutes=5)
+                purchase.save()
+                print('004')
+                Transfer.objects.create(
+                        outaccount=outaccount, 
+                        inaccount=inaccount,
+                        outamount=purchase.monthly_payment,
+                        inamount=purchase.monthly_payment,
+                        outcurrency='KZT',
+                        incurrency='KZT',
+                        outbalance=outaccount.balance,
+                        inbalance=inaccount.balance,
+                        transaction_type='Inst')
+                print('Transfer created')
+                messages.success(request, 'Платеж успешно проведен.')
+                return redirect('/transfers/success/')
+        except Exception as e:
+            messages.success(request, f'Транзакция не выполнена. Ошибка: {e}')
+        return redirect('/transfers/success/')
