@@ -35,7 +35,7 @@ class BankMainPageView(View):
             Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
             Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
             Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
-            Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0)
+            Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0.01)
             BadInst = Purchase.objects.filter(
                 user=user,
                 next_pay_date__lte=timezone.now()
@@ -133,8 +133,8 @@ class TransferSelfBankAccountsView(View):
                 else:
                     inaccount_object.balance += inamount
                     outaccount_object.balance -= outamount
-                    outaccount_object.save()  # Сохраняем изменения в базе данных
-                    inaccount_object.save()   # Сохраняем изменения в базе данных
+                    outaccount_object.save()
+                    inaccount_object.save()
                     incurrency = inaccount_object.currency
                     outcurrency = outaccount_object.currency
                     Transfer.objects.create(
@@ -208,7 +208,7 @@ class TransferAnyBankAccountsViewByNumber(View):
         if form.is_valid():
             outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
-            inaccount = form.cleaned_data['inaccount'][0]
+            inaccount = form.cleaned_data['inaccount']
             inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
             try:
                 if outaccount.balance < outamount:
@@ -253,7 +253,7 @@ class TransferAnyBankAccountsViewByIBAN(View):
         if form.is_valid():
             outamount = form.cleaned_data['outamount']
             outaccount = form.cleaned_data['outaccount']
-            inaccount = form.cleaned_data['inaccount'][0]
+            inaccount = form.cleaned_data['inaccount']
             inamount = currency_converter(float(outamount), str(outaccount.currency), str(inaccount.currency))
             try:
                 if outaccount.balance < outamount:
@@ -290,8 +290,8 @@ class UserInstsView(View):
 
     def get(self, request):
         user = request.user
-        Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0)
-        # BadInst = Purchase.objects.filter(user=user, remaining_amount__gt=0, next_pay_date__lte=timezone.now())
+        Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0.01)
+        # BadInst = Purchase.objects.filter(user=user, remaining_amount__gt=0.01, next_pay_date__lte=timezone.now())
         # print(len(BadInst))
         return render(
             request, 
@@ -316,10 +316,7 @@ class UserInstsView(View):
             inaccount = BankAccount.objects.get(iban='1234123412341234') # МАГАЗИН продумай - ибан банка изменится в другой базе
             amount = Decimal(value2)
             converted_amount = currency_converter(amount, 'KZT', outaccount.currency)
-            print(outaccount)
-            print(outaccount.balance)
             print('001')
-            print(type(amount))
             if outaccount.balance < converted_amount:
                 messages.error(request, 'Недостаточно средств на счету')
                 return redirect('/transfers/success/')
@@ -328,6 +325,8 @@ class UserInstsView(View):
                 outaccount.balance -= converted_amount
                 print('003')
                 outaccount.save()
+                inaccount.balance += amount
+                inaccount.save()
                 purchase.remaining_amount -= amount
                 purchase.next_pay_date += timezone.timedelta(minutes=5)
                 purchase.save()

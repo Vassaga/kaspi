@@ -1,5 +1,9 @@
 
 
+
+python manage.py shell < apps/shop/product_generator.py
+
+
 python manage.py shell < apps/shop/inst.py
 
 dramatiq redis apps.shop.tasks

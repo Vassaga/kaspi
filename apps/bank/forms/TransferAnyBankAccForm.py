@@ -31,12 +31,10 @@ class TransferAnyFormByNumber(forms.ModelForm):
         account_number = cleaned_data.get('account_number')
 
         if account_number:
-            try:
-                inaccount = BankAccount.objects.filter(Q(owner__number=account_number) & Q(type='Gold'))
-                cleaned_data['inaccount'] = inaccount
-            except BankAccount.DoesNotExist:
-                raise forms.ValidationError("Клиент таким номером не найден.")
-        
+            inaccount = BankAccount.objects.filter(Q(owner__number=account_number) & Q(type='Gold'))
+            if not inaccount.exists():
+                raise ValidationError("Клиент с таким номером не найден или не имеет счета Каспи Gold.")
+            cleaned_data['inaccount'] = inaccount.first()
         return cleaned_data
     
     
@@ -66,14 +64,11 @@ class TransferAnyFormByIBAN(forms.ModelForm):
         account_number = cleaned_data.get('account_number')
 
         if account_number:
-            try:
-                inaccount = BankAccount.objects.filter(Q(iban=account_number) & Q(type='Gold'))
-                cleaned_data['inaccount'] = inaccount
-                if len(inaccount) <1:
-                    raise forms.ValidationError("Счет с таким номером не найден.")
-            except:
-                # Обработка исключений
-                pass
+            inaccount = BankAccount.objects.filter(Q(iban=account_number) & Q(type='Gold'))
+            if not inaccount.exists():
+                raise ValidationError("Клиент с таким счетом Каспи Gold не найден.")
+            cleaned_data['inaccount'] = inaccount.first()
+
 
 
         return cleaned_data
