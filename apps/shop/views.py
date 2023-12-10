@@ -1,6 +1,7 @@
 
 """ SHOP VIEWS """
 
+import qrcode
 
 from django.shortcuts import render, redirect
 from django.views import View
@@ -109,22 +110,42 @@ class PurchaseSuccessView(View):
         return render(request, self.template_name)
 
 
+#  ГЕНЕРАТОР кодов для QRкода
+def qrcode_generator():
+    code = random.randint(100, 999)
+    return code
+
 class PurchaseProductView(View):
 
     """ СТРАННИЦА СОВЕРШЕНИЯ ПОКУПКИ (тип. КОРЗИНА). """
 
     template_name = 'purchase.html'
 
+
+
     def get(self, request, *args, **kwargs):
         form = PurchaseCreateForm(user=request.user)
+        qr_image = False
         if request.user.is_authenticated:
             user = request.user
             pk = kwargs.get('pk', None)
             product = Product.objects.get(pk=pk)
+            qr_data = qrcode_generator()
+            img = qrcode.make(qr_data)
+            type(img)
+            print('data created')
+            try:
+                img.save("apps/shop/static/qr/test.jpg")
+                request.session['qr_code'] = qr_data   # сохраняем QR код в сессию для сверки в дальнейшем
+                print('img created')
+                qr_image = True
+            except Exception as e:
+                print(f"Ошибка сохранения изображения: {e}")
+                qr_image = False
             return render(
                 request, 
                 self.template_name, 
-                context = {'pk': pk, 'user': user, 'product': product, 'form': form}
+                context = {'pk': pk, 'user': user, 'product': product, 'form': form, 'qr_image': qr_image}
             )
         else:
             return redirect('login/')
@@ -136,8 +157,10 @@ class PurchaseProductView(View):
             if form.is_valid():
                 print('покупка 02')   # удали
                 user = request.user #?
+                qr_code = request.session.get('qr_code')
                 pk = kwargs.get('pk', None)
                 product = Product.objects.get(pk=pk)
+                QRcode = form.cleaned_data['QRcode']   # вытаскиваем QR код из сессии для сверки
                 quantity = form.cleaned_data['quantity']
                 price = product.price*quantity
                 bankaccount = form.cleaned_data['BankAccount']
@@ -155,6 +178,9 @@ class PurchaseProductView(View):
                         elif product.quantity < quantity:
                             messages.error(request, 'Количество товара в наличии не достаточно.')
                             return redirect('success/')
+                        elif str(QRcode) != str(qr_code):   # сверяем значения введенного и актуального QR кодов
+                            messages.error(request, 'Не верно указан код.')
+                            return redirect('success/')
                         else:
                             obj_BankAccount.balance -= converted_price
                             product.quantity -= quantity
@@ -171,11 +197,12 @@ class PurchaseProductView(View):
                                 purchase_type='Cash',
                             )
                     except:
+                        print('покупка НЕ в рассрочку совершена')
                         messages.error(request, 'Ошибка покупки.')
                         return redirect('success/') 
                 elif inst != 0: # Логика покупки, c рассрочкой N месяц
                     try:
-                        print('рассрочка 03')   # удали
+                        print('покупка 03 рассрочка')   # удали
                         product.quantity -= quantity
                         obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
                         product.save() # Сохраняем изменения количества товара в базе данных
@@ -189,11 +216,11 @@ class PurchaseProductView(View):
                             purchase_type='Inst',
                             inst_duration=inst,
                             monthly_payment=(price/inst),
-                            # next_pay_date=timezone.now() + timezone.timedelta(days=30),  # настрой единый период??
+                            # next_pay_date=timezone.now() + timezone.timedelta(days=30),  # период в днях
                             next_pay_date=timezone.now() + timezone.timedelta(minutes=5),  # настрой единый период??
                             remaining_amount=price
                         )
-                        print('рассрочка ok')
+                        print('рассрочка ok')   # удали
                     except:
                         messages.error(request, 'Ошибка покупки.')
                         return redirect('success/')  

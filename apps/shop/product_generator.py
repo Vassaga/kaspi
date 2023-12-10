@@ -147,7 +147,7 @@ def Product_generator(category):
         return product
     
 def price_generator():
-    price = random.randint(100, 100000)
+    price = random.randint(100, 99999)
     return price
 
 def quantity_generator():

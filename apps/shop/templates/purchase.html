@@ -35,8 +35,12 @@
                         {{ form.as_p }}
                         <input type="submit" value="Подтвердить">
                     </form>
+                    {% if qr_image %}
+                        <img src="/static/qr/test.jpg">
+                    {% endif %}
                 </div>
         {% endif %}
+
         <div class="offers"></div>
         <div class="offers"></div>
         <div class="offers"></div>

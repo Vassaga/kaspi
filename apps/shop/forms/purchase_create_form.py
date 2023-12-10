@@ -6,6 +6,10 @@ from shop.models import Purchase, Product
 
 class PurchaseCreateForm(forms.Form):
 
+    QRcode = quantity = forms.IntegerField(
+        label='Отсканируйте QR-код и введите код:'
+        )
+
     quantity = forms.IntegerField(
         label='Количество', 
         widget=forms.NumberInput(attrs={'min': '1'}),
@@ -18,6 +22,7 @@ class PurchaseCreateForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}), 
         label='Счет списания'
     )
+
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
