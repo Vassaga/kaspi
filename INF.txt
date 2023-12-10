@@ -7,6 +7,10 @@ python manage.py shell < apps/shop/product_generator.py
 python manage.py shell < apps/shop/inst.py
 
 dramatiq redis apps.shop.tasks
+dramatiq redis apps.bank.tasks
+
+запускаем dramatiq в отдельном окне cmd (1 процесс, 3 потока)
+dramatiq --processes=1 --threads=3 redis apps.bank.tasks            
 
 py -m venv env
 

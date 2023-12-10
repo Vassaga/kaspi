@@ -33,7 +33,7 @@ def instcontrol():
                 if purchase.next_pay_date <= timezone.now():
                     try:
                         outaccount = BankAccount.objects.get(iban=purchase.iban)
-                        inaccount = BankAccount.objects.get(iban='1234123412341234')
+                        inaccount = BankAccount.objects.get(iban='7777777777777777')
                         outaccount.balance -= purchase.monthly_payment
                         outaccount.save()
                         print('001')

@@ -165,7 +165,7 @@ def ProductGenerator():
         )
     print('Учетка КАСПИ-МАГАЗИН создана')
     BankAccount.objects.create(
-        iban='1234123412341234',
+        iban='7777777777777777',
         owner=MyUser.objects.get(number='77777777777'),
         balance='0',
         currency='KZT',

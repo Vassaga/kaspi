@@ -141,6 +141,7 @@ class PurchaseProductView(View):
                 quantity = form.cleaned_data['quantity']
                 price = product.price*quantity
                 bankaccount = form.cleaned_data['BankAccount']
+                inaccount = BankAccount.objects.get(iban='7777777777777777') # МАГАЗИН продумай - ибан банка изменится в другой базе
                 obj_BankAccount = BankAccount.objects.get(pk=bankaccount.pk)
                 inst = int(form.cleaned_data['my_field'])
                 converted_price = currency_converter(price, 'KZT', obj_BankAccount.currency)
@@ -157,6 +158,8 @@ class PurchaseProductView(View):
                         else:
                             obj_BankAccount.balance -= converted_price
                             product.quantity -= quantity
+                            inaccount.balance += price
+                            inaccount.save()
                             obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
                             product.save() # Сохраняем изменения количества товара в базе данных
                             Purchase.objects.create(

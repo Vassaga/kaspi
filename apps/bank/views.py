@@ -313,7 +313,7 @@ class UserInstsView(View):
             purchase=Purchase.objects.get(pk=value1)
             print(value1, value2, purchase)
             outaccount = BankAccount.objects.get(iban=purchase.iban)
-            inaccount = BankAccount.objects.get(iban='1234123412341234') # МАГАЗИН продумай - ибан банка изменится в другой базе
+            inaccount = BankAccount.objects.get(iban='7777777777777777') # МАГАЗИН продумай - ибан банка изменится в другой базе
             amount = Decimal(value2)
             converted_amount = currency_converter(amount, 'KZT', outaccount.currency)
             print('001')
