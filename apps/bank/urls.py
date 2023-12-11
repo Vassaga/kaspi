@@ -3,7 +3,10 @@
 from django.urls import path
 
 from bank.views import (
-    BankMainPageView, 
+    BankMainPageView,
+    BankAccountDetailsView,
+    BankAccountDetailsInfoView,
+    BankAccountDetailsInfo2View,
     CreateBankAccountView, 
     TransfersPageView, 
     TransferSelfBankAccountsView,
@@ -27,5 +30,8 @@ urlpatterns = [
     path('transfers/', TransfersPageView.as_view()),
     path('bank/user_insts/', UserInstsView.as_view()),
     path('bank/create_account/<str:account_type>/', CreateBankAccountView.as_view(), name='create_account'),
+    path('bank/details/info2/', BankAccountDetailsInfo2View.as_view(), name='account_details_info2'),
+    path('bank/details/info/', BankAccountDetailsInfoView.as_view(), name='account_details_info'),
+    path('bank/details/', BankAccountDetailsView.as_view(), name='account_details'),
     path('bank/', BankMainPageView.as_view()),
 ]

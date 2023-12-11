@@ -54,6 +54,77 @@ class BankMainPageView(View):
             )
         else:
             return redirect('login/')
+        
+class BankAccountDetailsView(View):
+
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            user = request.user   # получаем авторизованного пользователя
+            # вытаскиваем типы счетов:
+            Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
+            Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
+            Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
+            return render(
+                template_name='account_details.html',
+                request=request,
+                context = {
+                    'user': user,
+                    'Gold_accounts': Gold_accounts,
+                    'Dep_accounts' : Dep_accounts,
+                    'Red_accounts' : Red_accounts
+                }
+            )
+        else:
+            return redirect('/login/')
+        
+class BankAccountDetailsInfoView(View):
+
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            user = request.user   # получаем авторизованного пользователя
+            # вытаскиваем типы счетов:
+            Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
+            Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
+            Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
+            return render(
+                template_name='account_details_info.html',
+                request=request,
+                context = {
+                    'user': user,
+                    'Gold_accounts': Gold_accounts,
+                    'Dep_accounts' : Dep_accounts,
+                    'Red_accounts' : Red_accounts
+                }
+            )
+        else:
+            return redirect('/login/')
+        
+class BankAccountDetailsInfo2View(View):
+
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            user = request.user   # получаем авторизованного пользователя
+            # вытаскиваем типы счетов:
+            Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
+            Transfers = Transfer.objects.filter(outaccount__owner=user).order_by('-datetime')
+            return render(
+                template_name='account_details_vipiska.html',
+                request=request,
+                context = {
+                    'user': user,
+                    'Gold_accounts': Gold_accounts,
+                    'Transfers': Transfers,
+                }
+            )
+        else:
+            return redirect('/login/')
+
 
 class CreateBankAccountView(View):
 

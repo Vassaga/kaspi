@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/bank.css">
+    <title>Мой банк</title>
+    <style>html { background-color: rgb(235, 235, 235);}</style>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/bank/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+            <div class="details">
+                {% if Gold_accounts %}
+                    {% for account in Gold_accounts %}
+                        <div>
+                            <h3>Kaspi Gold *{{ account.iban|slice:"-4:" }} </h3>
+                            <h3>Доступно</h3>
+                            <h2>{{ account.balance }} {{ account.currency }}</h2>
+                        </div>
+                    {% endfor %}
+                {% else %}
+
+                {% endif %}
+            </div>
+
+        {% endif %} 
+        <div class="post_head">
+            <h2>ДЕЙСТВИЯ <a href="/bank/details/info/">| ИНФО | </a><a href="/bank/details/info2/">ВЫПИСКА</a></h2>
+        </div>
+        <div class="fake_details"><a href="/transfers/"><img src="/static/images/fake_details_001.png"></a></div>
+        <div class="foot">
+            <div class="foot_1"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>

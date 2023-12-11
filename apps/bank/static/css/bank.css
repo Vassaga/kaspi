@@ -80,6 +80,86 @@ a {
     text-decoration: none;
 }
 
+.details {
+    width: auto;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    padding-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 213, 105);
+}
+
+.details h2 {
+    font-family: "Arial Unicode MS", sans-serif;
+    
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.details h3 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.details2 {
+    width: auto;
+    height: 800px;
+    background-color: rgb(255, 255, 255);
+    padding-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+}
+
+.details2 h2 {
+    font-family: "Arial Unicode MS", sans-serif;
+    
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.details2 h3 {
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.fake_details {
+    max-width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    margin-top: 3px;
+    overflow: hidden;
+}
+
+.fake_details img {
+    width: auto;
+    height: auto;
+}
+
+.post_head {
+    width: 500px;
+    height: 60px;
+    margin-top: 3px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    flex-direction: row;
+    text-align: center;
+    font-family: "Arial Unicode MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fc0505;
+}
 
 .chet_gold_info {
     width: 100%;
@@ -251,6 +331,11 @@ a {
     margin-top: 7px;
 }
 
+a {
+    text-decoration: none;
+    color: #000000;
+  }
+  
 .foot_1 {
     width: 100px;
     height: 100px;

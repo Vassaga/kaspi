@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/bank.css">
+    <title>Мой банк</title>
+    <style>
+        html { background-color: rgb(235, 235, 235);}
+        .chet_gold {margin-top: 2px; font-family: "Arial Unicode MS", sans-serif; font-size: 14px; font-weight: bold; color: #333;}
+        .ico_schet {padding-left: 10px; width: auto;}
+        .ico_schet img {padding-top: 20px;}
+    </style>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/bank/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+            <div class="details">
+                {% if Gold_accounts %}
+                    {% for account in Gold_accounts %}
+                        <div>
+                            <h3>Kaspi Gold *{{ account.iban|slice:"-4:" }} </h3>
+                            <h3>Доступно</h3>
+                            <h2>{{ account.balance }} {{ account.currency }}</h2>
+                        </div>
+                    {% endfor %}
+                {% else %}
+
+                {% endif %}
+            </div>
+
+
+            <div class="post_head">
+                <h2><a href="/bank/details/">ДЕЙСТВИЯ | </a> <a href="/bank/details/info/"> ИНФО | </a>ВЫПИСКА</h2>
+            </div>
+            <div class="chet_gold_info">
+                {% if Transfers %}
+                    {% for transfer in Transfers %}
+                    <div class="chet_gold">
+                        <div class="ico_schet">
+                            <img src="/static/images/kaspi_TransAnoverHistory_ico.png">
+                        </div>
+                        <div class="schet">
+                            <p>{{ transfer.datetime }} </p>
+                            <p>{{ transfer.outamount }} {{ transfer.outaccount.currency }} со своего счета {{ transfer.outaccount.type}} на счет {{ transfer.inaccount.owner.fio }} {{ transfer.inaccount.type }}</p>
+                            <p>остаток на счете {{ transfer.outbalance }} </p>
+                            
+                        </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+            </div>
+        {% endif %} 
+        <div class="foot">
+            <div class="foot_1"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>
