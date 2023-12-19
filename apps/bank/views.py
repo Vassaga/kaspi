@@ -26,34 +26,38 @@ from shop.models import Purchase
 
 class BankMainPageView(View):
 
-    """ ГЛАВНАЯ СТРАНИЦА БАНКА ПОЛЬЗОВАТЕЛЯ. """
+    """ ГЛАВНАЯ СТРАНИЦА ПОЛЬЗОВАТЕЛЯ БАНКА. """
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        if request.user.is_authenticated:
-            user = request.user   # получаем авторизованного пользователя
-            # вытаскиваем типы счетов:
-            Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
-            Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
-            Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
-            Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0.01)
-            BadInst = Purchase.objects.filter(
-                user=user,
-                next_pay_date__lte=timezone.now()
-            )
-            return render(
-                template_name='bank.html',
-                request=request,
-                context = {
-                    'user': user,
-                    'inst': Inst,
-                    'badinst': BadInst,
-                    'Gold_accounts': Gold_accounts,
-                    'Dep_accounts' : Dep_accounts,
-                    'Red_accounts' : Red_accounts
-                }
-            )
-        else:
-            return redirect('login/')
+        try:
+            if request.user.is_authenticated:
+                user = request.user   # получаем авторизованного пользователя
+                # вытаскиваем типы счетов:
+                Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
+                Dep_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.DEP).order_by('owner', 'type')
+                Red_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.RED).order_by('owner', 'type')
+                Inst = Purchase.objects.filter(user=user, remaining_amount__gt=0.01)
+                BadInst = Purchase.objects.filter(
+                    user=user,
+                    next_pay_date__lte=timezone.now()
+                )
+                return render(
+                    template_name='bank.html',
+                    request=request,
+                    context = {
+                        'user': user,
+                        'inst': Inst,
+                        'badinst': BadInst,
+                        'Gold_accounts': Gold_accounts,
+                        'Dep_accounts' : Dep_accounts,
+                        'Red_accounts' : Red_accounts
+                    }
+                )
+            else:
+                return redirect('login/')
+        except Exception as e:
+                messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+                return redirect('/transfers/success/')
         
 class BankAccountDetailsView(View):
 
