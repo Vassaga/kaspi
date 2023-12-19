@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/transfers_page.css">
+    <style>html { background-color: rgb(235, 235, 235);}</style>
+    <title>Переводы</title>
+</head>
+<body>
+    <div class="ALL">
+        <div class="head">
+            <a href="/"><div class="back_point"></div></a>
+            <div class="My_Bank"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="offer1"></div>
+        {% if user.is_authenticated %}
+        <div class="post_head">
+           
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <br>
+                        <h2{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h2>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% endif %} 
+        <div class="offer2"></div>
+        <div class="foot">
+            <div class="foot_1"><a href="/"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></a></div>
+            <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
+            <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
+        </div>    
+    </div>
+</body>
+</html>

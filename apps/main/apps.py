@@ -1,3 +1,6 @@
+
+''' MAIN APPS '''
+
 from django.apps import AppConfig
 
 

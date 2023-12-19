@@ -1,9 +1,7 @@
 from django import forms 
 from bank.models import BankAccount, Transfer
 
-from django.http.request import HttpRequest
 from django.core.exceptions import ValidationError
-from typing import Any
 from django.db.models import Q
 
 

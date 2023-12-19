@@ -6,7 +6,6 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 
 from auths.models import MyUser
@@ -72,16 +71,16 @@ class BankAccount(models.Model):
     def __str__(self):
         return f"{self.get_type_display()} - {self.balance} {self.currency}"
 
-@receiver(pre_save, sender=BankAccount)
+@receiver(pre_save, sender=BankAccount)          # декоратор, который связывает функцию generate_iban с событием pre_save (перед сохранением)
 def generate_iban(sender, instance, **kwargs):
     if not instance.iban:
         # Генерация уникального 16-значного числа
         generated_iban = ''.join([str(random.randint(0, 9)) for _ in range(16)])
-        # Проверка на уникальность в базе данных
+        # Проверка на уникальность в базе данных - Если IBAN уже существует, то генерируется новый IBAN, пока не будет найден уникальный.
         while BankAccount.objects.filter(iban=generated_iban).exists():
             generated_iban = ''.join([str(random.randint(0, 9)) for _ in range(16)])
 
-        instance.iban = generated_iban
+        instance.iban = generated_iban   # Назначает уникально сгенерированный IBAN объекту BankAccount
 
 
 

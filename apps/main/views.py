@@ -1,6 +1,7 @@
-from django.shortcuts import render
 
-# Create your views here.
+''' MAIN VIEWS '''
+
+from django.shortcuts import render
 
 from shop.product_generator import *
 

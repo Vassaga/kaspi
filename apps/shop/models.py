@@ -19,9 +19,6 @@ class Category(models.Model):
         max_length=100
     )
 
-    # class Meta:
-    #     app_label = 'shop'
-
     def __str__(self):
         return self.name
     

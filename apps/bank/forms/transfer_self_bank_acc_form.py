@@ -1,21 +1,6 @@
 from django import forms 
 from bank.models import BankAccount, Transfer
 
-from django.http.request import HttpRequest
-from django.core.exceptions import ValidationError
-from typing import Any
-
-
-# class BankAccountWidget(forms.Select):
-#     def format_option(self, *args, **kwargs):
-#         option = super().format_option(*args, **kwargs)
-#         account_pk = option['value']
-#         try:
-#             account = BankAccount.objects.get(pk=account_pk)
-#             option['label'] += f" (Баланс: {account.balance} {account.currency})"
-#         except BankAccount.DoesNotExist:
-#             pass  # Обработка исключения, если счет не найден (это может произойти, если вы удалите счет после того, как пользователь выбрал его в форме)
-#         return option
 
 class TransferSelfForm(forms.ModelForm):
     class Meta:

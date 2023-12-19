@@ -1,4 +1,6 @@
 
+""" SHOP PRODUCT AND CATEGORY GENERATORS """
+
 import random
 
 from auths.models import MyUser
@@ -195,35 +197,3 @@ def ProductGenerator():
             rating = rating_generator(),
         )
         print(f'Продукт {name} создан')
-
-# def RUN_ProductGenerator():
-#     for _ in range(100):
-#         return ProductGenerator()
-
-
-
-# category = [
-#     "Мебель", "Электроника", "Одежда", "Обувь", "Спорт и отдых", 
-#     "Красота и здоровье", "Бытовая техника", "Детские товары", 
-#     "Автотовары", "Книги", "Игрушки", "Хозяйственные товары", 
-#     "Товары для дома", "Украшения", "Техника для кухни", 
-#     "Музыкальные инструменты"]
-    
-# for i in category:
-#     Category.objects.create(
-#         name = i
-#     )
-#     print(f'Категория {i} создана')
-
-# for i in range(10):
-#     category = Categoryes_generator()
-#     product = Product_generator(category)
-#     price = price_generator()
-#     quantity = quantity_generator()
-#     rating = rating_generator()
-#     ProductGenerator(category, product, price, quantity, rating)
-
-
-
-
-# print('ok')

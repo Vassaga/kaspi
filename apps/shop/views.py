@@ -21,49 +21,66 @@ from shop.models import (
 from shop.product_generator import *
 
 def shop_page(request): # главная страница приложения МАГАЗИН
-    if request.user.is_authenticated:
-        user = request.user
-        products = Product.objects.all().order_by('rating')
-        return render(
-            template_name='shop.html',
-            request=request,
-            context = {
-                        'user': user,
-                        'products': products
-                    }
-        )
-    else:
-        products = Product.objects.all().order_by('rating')
-        return render(
-            template_name='shop.html',
-            request=request,
-            context = {
-                        'products': products
-                    }
-        )
+    try:
+        if request.user.is_authenticated:
+            user = request.user
+            products = Product.objects.all().order_by('rating')
+            return render(
+                template_name='shop.html',
+                request=request,
+                context = {
+                            'user': user,
+                            'products': products
+                        }
+            )
+        else:
+            products = Product.objects.all().order_by('rating')
+            return render(
+                template_name='shop.html',
+                request=request,
+                context = {
+                            'products': products
+                        }
+            )
+    except Exception as e:
+        messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+        return redirect('done/')
     
 def catalog_page(request): # каталог приложения МАГАЗИН
-    if request.user.is_authenticated:
-        user = request.user
-        categories = Category.objects.all().order_by('name')
-        return render(
-            template_name='catalog.html',
-            request=request,
-            context = {
-                        'user': user,
-                        'categories': categories
-                    }
-        )
-    else:
-        categories = Category.objects.all().order_by('name')
-        return render(
-            template_name='catalog.html',
-            request=request,
-            context = {
-                        'categories': categories
-                    }
-        )
-    
+    try:
+        if request.user.is_authenticated:
+            user = request.user
+            categories = Category.objects.all().order_by('name')
+            return render(
+                template_name='catalog.html',
+                request=request,
+                context = {
+                            'user': user,
+                            'categories': categories
+                        }
+            )
+        else:
+            categories = Category.objects.all().order_by('name')
+            return render(
+                template_name='catalog.html',
+                request=request,
+                context = {
+                            'categories': categories
+                        }
+            )
+    except Exception as e:
+        messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+        return redirect('/shop/done/')
+
+class DoneView(View):
+
+    """ СТРАННИЦА О СТАТУСЕ ОПЕРАЦИЙ. """
+
+    template_name = 'done.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
 class ProductsPageView(View):
 
     """ СТРАННИЦА ОБЗОРА ВСЕХ ТОВАРОВ ОДНОЙ КАТЕГОРИИ. """
@@ -71,14 +88,17 @@ class ProductsPageView(View):
     template_name = 'products.html'
 
     def get(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        category = Category.objects.get(pk=pk)
-        products = Product.objects.filter(category=category)
-        return render(
-            request, 
-            self.template_name, 
-            context = {'pk': pk, 'products': products, 'category': category})
-
+        try:
+            pk = kwargs.get('pk', None)
+            category = Category.objects.get(pk=pk)
+            products = Product.objects.filter(category=category)
+            return render(
+                request, 
+                self.template_name, 
+                context = {'pk': pk, 'products': products, 'category': category})
+        except Exception as e:
+            messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+            return redirect('/shop/done/')
 
 class ProductPageView(View):
 
@@ -87,18 +107,22 @@ class ProductPageView(View):
     template_name = 'product.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            user = request.user
-            pk = kwargs.get('pk', None)
-            product = Product.objects.get(pk=pk)
-            # product = Product.objects.filter(category=category)
-            return render(
-                request, 
-                self.template_name, 
-                context = {'pk': pk, 'user': user, 'product': product}
-            )
-        else:
-            return redirect('/bank/login/')
+        try:
+            if request.user.is_authenticated:
+                user = request.user
+                pk = kwargs.get('pk', None)
+                product = Product.objects.get(pk=pk)
+                # product = Product.objects.filter(category=category)
+                return render(
+                    request, 
+                    self.template_name, 
+                    context = {'pk': pk, 'user': user, 'product': product}
+                )
+            else:
+                return redirect('/bank/login/')
+        except Exception as e:
+            messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+            return redirect('/shop/done/')
         
 class PurchaseSuccessView(View):
 
@@ -121,57 +145,59 @@ class PurchaseProductView(View):
 
     template_name = 'purchase.html'
 
-
-
     def get(self, request, *args, **kwargs):
-        form = PurchaseCreateForm(user=request.user)
-        qr_image = False
-        if request.user.is_authenticated:
-            user = request.user
-            pk = kwargs.get('pk', None)
-            product = Product.objects.get(pk=pk)
-            qr_data = qrcode_generator()
-            img = qrcode.make(qr_data)
-            type(img)
-            print('data created')
-            try:
-                img.save("apps/shop/static/qr/test.jpg")
-                request.session['qr_code'] = qr_data   # сохраняем QR код в сессию для сверки в дальнейшем
-                print('img created')
-                qr_image = True
-            except Exception as e:
-                print(f"Ошибка сохранения изображения: {e}")
-                qr_image = False
-            return render(
-                request, 
-                self.template_name, 
-                context = {'pk': pk, 'user': user, 'product': product, 'form': form, 'qr_image': qr_image}
-            )
-        else:
-            return redirect('login/')
-        
-    def post(self, request, *args, **kwargs):
-        form = PurchaseCreateForm(request.POST, user=request.user)
-        print('покапка 01')   # удали
-        if request.user.is_authenticated:
-            if form.is_valid():
-                print('покупка 02')   # удали
-                user = request.user #?
-                qr_code = request.session.get('qr_code')
+        try:
+            form = PurchaseCreateForm(user=request.user)
+            qr_image = False
+            if request.user.is_authenticated:
+                user = request.user
                 pk = kwargs.get('pk', None)
                 product = Product.objects.get(pk=pk)
-                QRcode = form.cleaned_data['QRcode']   # вытаскиваем QR код из сессии для сверки
-                quantity = form.cleaned_data['quantity']
-                price = product.price*quantity
-                bankaccount = form.cleaned_data['BankAccount']
-                inaccount = BankAccount.objects.get(iban='7777777777777777') # МАГАЗИН продумай - ибан банка изменится в другой базе
-                obj_BankAccount = BankAccount.objects.get(pk=bankaccount.pk)
-                inst = int(form.cleaned_data['my_field'])
-                converted_price = currency_converter(price, 'KZT', obj_BankAccount.currency)
-                # converted_balance = currency_converter(bankaccount.balance, obj_BankAccount.currency, 'KZT')
-                # if inst == 'option1' and obj_BankAccount.type == 'Gold':  # Логика покупки, если без рассрочки и каспи ГОЛД
-                if inst == 0:     # Логика покупки, если без рассрочки
-                    try:
+                qr_data = qrcode_generator()
+                img = qrcode.make(qr_data)
+                type(img)
+                print('data created')
+                try:
+                    img.save("apps/shop/static/qr/test.jpg")
+                    request.session['qr_code'] = qr_data   # сохраняем QR код в сессию для сверки в дальнейшем
+                    print('img created')
+                    qr_image = True
+                except Exception as e:
+                    print(f"Ошибка сохранения изображения: {e}")
+                    qr_image = False
+                return render(
+                    request, 
+                    self.template_name, 
+                    context = {'pk': pk, 'user': user, 'product': product, 'form': form, 'qr_image': qr_image}
+                )
+            else:
+                return redirect('login/')
+        except Exception as e:
+            messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+            return redirect('/shop/done/')
+        
+    def post(self, request, *args, **kwargs):
+        try:
+            form = PurchaseCreateForm(request.POST, user=request.user)
+            print('покапка 01')   # удали
+            if request.user.is_authenticated:
+                if form.is_valid():
+                    print('покупка 02')   # удали
+                    user = request.user #?
+                    qr_code = request.session.get('qr_code')
+                    pk = kwargs.get('pk', None)
+                    product = Product.objects.get(pk=pk)
+                    QRcode = form.cleaned_data['QRcode']   # вытаскиваем QR код из сессии для сверки
+                    quantity = form.cleaned_data['quantity']
+                    price = product.price*quantity
+                    bankaccount = form.cleaned_data['BankAccount']
+                    inaccount = BankAccount.objects.get(iban='7777777777777777') # МАГАЗИН продумай - ибан банка изменится в другой базе
+                    obj_BankAccount = BankAccount.objects.get(pk=bankaccount.pk)
+                    inst = int(form.cleaned_data['my_field'])
+                    converted_price = currency_converter(price, 'KZT', obj_BankAccount.currency)
+                    # converted_balance = currency_converter(bankaccount.balance, obj_BankAccount.currency, 'KZT')
+                    # if inst == 'option1' and obj_BankAccount.type == 'Gold':  # Логика покупки, если без рассрочки и каспи ГОЛД
+                    if inst == 0:     # Логика покупки, если без рассрочки
                         if obj_BankAccount.balance < converted_price:
                             messages.error(request, 'Недостаточно средств на счете списания.')
                             return redirect('success/')
@@ -196,12 +222,7 @@ class PurchaseProductView(View):
                                 iban=bankaccount.iban,
                                 purchase_type='Cash',
                             )
-                    except:
-                        print('покупка НЕ в рассрочку совершена')
-                        messages.error(request, 'Ошибка покупки.')
-                        return redirect('success/') 
-                elif inst != 0: # Логика покупки, c рассрочкой N месяц
-                    try:
+                    elif inst != 0: # Логика покупки, c рассрочкой N месяц
                         if obj_BankAccount.balance < converted_price:
                             messages.error(request, 'Недостаточно средств на счете списания.')
                             return redirect('success/')
@@ -230,13 +251,11 @@ class PurchaseProductView(View):
                                 next_pay_date=timezone.now() + timezone.timedelta(minutes=5),  # настрой единый период??
                                 remaining_amount=price
                             )
-                            print('рассрочка ok')   # удали
-                    except:
-                        messages.error(request, 'Ошибка покупки.')
-                        return redirect('success/')  
-                messages.success(request, 'Покупка успешно выполнена.')        
-                return redirect('success/')
-        else:
-            return redirect('login/')
-        messages.error(request, 'Ошибка.')        
-        return redirect('success/')
+                    messages.success(request, 'Покупка успешно выполнена.')        
+                    return redirect('success/')
+            else:
+                return redirect('login/')       
+            return redirect('success/')
+        except Exception as e:
+            messages.error(request, f'Что то пошло не так. Ошибка: {e}')
+            return redirect('/shop/done/')

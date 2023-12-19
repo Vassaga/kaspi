@@ -1,4 +1,4 @@
-''' MAIN URLS'''
+''' MAIN URLS '''
 
 
 from django.urls import path

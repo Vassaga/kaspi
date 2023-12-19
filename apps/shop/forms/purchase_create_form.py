@@ -1,8 +1,6 @@
 from django import forms 
 
 from bank.models import BankAccount
-from shop.models import Purchase, Product
-
 
 class PurchaseCreateForm(forms.Form):
 
