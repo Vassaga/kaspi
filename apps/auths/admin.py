@@ -1,6 +1,7 @@
-from django.contrib import admin
 
-# Register your models here.
+'''AUTHS ADMIN'''
+
+from django.contrib import admin
 
 from auths.models import (
     MyUser,

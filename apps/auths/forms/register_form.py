@@ -16,15 +16,19 @@ class RegisterForm(forms.Form):
     def clean(self) -> dict[str, Any]:
         return super().clean()
     
-    def clean_number(self):   # нужно доработать разные варианты ошибок номера, пустое поле, некорректный номер и т.д.
+    def clean_number(self):
         data: str = self.cleaned_data['number']
-        if MyUser.objects.filter(number=data).exists() == True:
+        if len(data) != 10:
+            raise ValidationError('неверный формат номера')
+        elif MyUser.objects.filter(number=f'7{data}').exists() == True:
             raise ValidationError('пользователь с таким номером уже зарегистрирован')
         return data
     
     def clean_fio(self):
         data: str = self.cleaned_data['fio']
         if len(data) < 3:
+            raise ValidationError('Введите корректное имя')
+        if any(char.isalpha() for char in data) == False:
             raise ValidationError('Введите корректное имя')
         return data
     

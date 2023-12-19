@@ -202,25 +202,35 @@ class PurchaseProductView(View):
                         return redirect('success/') 
                 elif inst != 0: # Логика покупки, c рассрочкой N месяц
                     try:
-                        print('покупка 03 рассрочка')   # удали
-                        product.quantity -= quantity
-                        obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
-                        product.save() # Сохраняем изменения количества товара в базе данных
-                        print('04')   # удали
-                        Purchase.objects.create(
-                            user=user,
-                            product=product,
-                            quantity=quantity,
-                            price=price,
-                            iban=bankaccount.iban,
-                            purchase_type='Inst',
-                            inst_duration=inst,
-                            monthly_payment=(price/inst),
-                            # next_pay_date=timezone.now() + timezone.timedelta(days=30),  # период в днях
-                            next_pay_date=timezone.now() + timezone.timedelta(minutes=5),  # настрой единый период??
-                            remaining_amount=price
-                        )
-                        print('рассрочка ok')   # удали
+                        if obj_BankAccount.balance < converted_price:
+                            messages.error(request, 'Недостаточно средств на счете списания.')
+                            return redirect('success/')
+                        elif product.quantity < quantity:
+                            messages.error(request, 'Количество товара в наличии не достаточно.')
+                            return redirect('success/')
+                        elif str(QRcode) != str(qr_code):   # сверяем значения введенного и актуального QR кодов
+                            messages.error(request, 'Не верно указан код.')
+                            return redirect('success/')
+                        else:
+                            print('покупка 03 рассрочка')   # удали
+                            product.quantity -= quantity
+                            obj_BankAccount.save() # Сохраняем изменения баланса в базе данных
+                            product.save() # Сохраняем изменения количества товара в базе данных
+                            print('04')   # удали
+                            Purchase.objects.create(
+                                user=user,
+                                product=product,
+                                quantity=quantity,
+                                price=price,
+                                iban=bankaccount.iban,
+                                purchase_type='Inst',
+                                inst_duration=inst,
+                                monthly_payment=(price/inst),
+                                # next_pay_date=timezone.now() + timezone.timedelta(days=30),  # период в днях
+                                next_pay_date=timezone.now() + timezone.timedelta(minutes=5),  # настрой единый период??
+                                remaining_amount=price
+                            )
+                            print('рассрочка ok')   # удали
                     except:
                         messages.error(request, 'Ошибка покупки.')
                         return redirect('success/')  

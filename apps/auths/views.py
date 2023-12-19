@@ -5,9 +5,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
 from django.contrib import messages
 
 from auths.forms.register_form import RegisterForm

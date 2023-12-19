@@ -1,3 +1,6 @@
+
+''' AUTHS APPS'''
+
 from django.apps import AppConfig
 
 

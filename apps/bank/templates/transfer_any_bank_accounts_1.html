@@ -22,7 +22,7 @@
         <br>
         <div class="transfer">
             <div>
-                <form method="post" action="/transfers/any/choice/2/">
+                <form method="post" action="/transfers/any/choice/1/">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="ПЕРЕВЕСТИ">
@@ -32,7 +32,7 @@
         </div>
         <div class="offers"></div>
         <div class="foot">
-            <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
+            <div class="foot_1"><a href="/"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></a></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>

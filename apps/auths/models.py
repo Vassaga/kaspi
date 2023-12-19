@@ -3,7 +3,6 @@
 
 from django.core.exceptions import ValidationError
 from django.db import models
-# from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 

@@ -44,6 +44,10 @@
                         <h2>{{ account.iban }}</h2>
                         <h3>Имя владельца:</h3>
                         <h2>{{ account.owner.fio }}</h2>
+                        <h3>Валюта счета:</h3>
+                        <h2>{{ account.currency }}</h2>
+                        <h3>Тип счета:</h3>
+                        <h2>Каспи {{ account.type }}</h2>
                     </div>
                 {% endfor %}
             {% else %}
@@ -51,7 +55,7 @@
             {% endif %}
         </div>
         <div class="foot">
-            <div class="foot_1"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></div>
+            <div class="foot_1"><a href="/"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></a></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>

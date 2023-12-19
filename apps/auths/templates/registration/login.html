@@ -33,27 +33,14 @@
                 {% endblock %}
                 <p><a href="/reg/">Регистрация</a></p>
             </div>
-            <!-- <div>
-                {% if user.is_authenticated %}
-                    Привет {{ user.fio }}!
-                    <p><a href="{% url 'logout' %}">Log Out</a></p>
-                {% else %}
-                    <p>Вы не авторизованы</p>
-                    <a href="{% url 'login' %}">ВОЙТИ</a>
-                {% endif %}
-            </div> -->
         </div>
         <div class="offer2"></div>
         <div class="foot">
-            <div class="foot_1"><img src="/static/images/kaspi_MAIN_activ_ico.png"></div>
+            <div class="foot_1"><a href="/"><img src="/static/images/kaspi_MAIN_no_activ_ico.png"></a></div>
             <div class="foot_1"><img src="/static/images/kaspi_QR_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_MSGS_no_activ_ico.png"></div>
             <div class="foot_1"><img src="/static/images/kaspi_SERVICES_no_activ_ico.png"></div>
         </div>    
     </div>
-</body>
-
-
-
 </body>
 </html>

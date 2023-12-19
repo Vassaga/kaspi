@@ -18,8 +18,8 @@ from django.utils import timezone
 from auths.models import MyUser
 from bank.models import BankAccount, Transfer
 from bank.forms.create_bankaccount import BankAccountForm
-from bank.forms.TransferSelfBankAccForm import TransferSelfForm
-from bank.forms.TransferAnyBankAccForm import TransferAnyFormByIBAN, TransferAnyFormByNumber
+from bank.forms.transfer_self_bank_acc_form import TransferSelfForm
+from bank.forms.transfer_any_bank_acc_form import TransferAnyFormByIBAN, TransferAnyFormByNumber
 from bank.currency_converter import currency_converter
 from shop.models import Purchase
 
@@ -57,7 +57,7 @@ class BankMainPageView(View):
         
 class BankAccountDetailsView(View):
 
-    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. ДЕЙСТВИЯ. """
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         if request.user.is_authenticated:
@@ -81,7 +81,7 @@ class BankAccountDetailsView(View):
         
 class BankAccountDetailsInfoView(View):
 
-    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. ИНФО О СЧЕТЕ. """
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         if request.user.is_authenticated:
@@ -105,7 +105,7 @@ class BankAccountDetailsInfoView(View):
         
 class BankAccountDetailsInfo2View(View):
 
-    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. """
+    """ СТРАНИЦА ИНФОРМАЦИИ О СЧЕТЕ. ВЫПИСКА. """
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         if request.user.is_authenticated:
@@ -113,6 +113,7 @@ class BankAccountDetailsInfo2View(View):
             # вытаскиваем типы счетов:
             Gold_accounts = BankAccount.objects.filter(owner=user, type=BankAccount.AccauntType.GOLD).order_by('owner', 'type')
             Transfers = Transfer.objects.filter(outaccount__owner=user).order_by('-datetime')
+            Purchases = Purchase.objects.filter(user=user).order_by('-pk')
             return render(
                 template_name='account_details_vipiska.html',
                 request=request,
@@ -120,6 +121,7 @@ class BankAccountDetailsInfo2View(View):
                     'user': user,
                     'Gold_accounts': Gold_accounts,
                     'Transfers': Transfers,
+                    'Purchases': Purchases
                 }
             )
         else:
@@ -152,7 +154,6 @@ class CreateBankAccountView(View):
         user = request.user
         account_type = kwargs.get('account_type', None)
         if form.is_valid():
-            balance = '0'
             currency = form.cleaned_data['currency']
             if account_type == 'gold':
                 type = BankAccount.AccauntType.GOLD
@@ -162,6 +163,10 @@ class CreateBankAccountView(View):
                 type = BankAccount.AccauntType.DEP
             else:
                 type = BankAccount.AccauntType.GOLD  # Значение по умолчанию - нужно ли нам это?
+            if account_type == 'gold' and currency == 'KZT':
+                balance = '1000000'
+            else:
+                balance = '0'
             BankAccount.objects.create(owner=user, balance=balance, currency=currency, type=type)
             return redirect('/bank/')
         return render(request, self.template_name, {'form': form})
@@ -171,7 +176,7 @@ class TransfersPageView(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ. """
 
-    template_name = 'TransfersPage.html'
+    template_name = 'transfers_page.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -181,7 +186,7 @@ class TransferSelfBankAccountsView(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ МЕЖДУ СВОИМИ СЧЕТАМИ. """
 
-    template_name = 'TransferSelfBankAccounts.html'
+    template_name = 'transfer_self_bank_accounts.html'
 
     def get(self, request):
         form = TransferSelfForm(user=request.user)
@@ -228,7 +233,7 @@ class TransferSuccessView(View):
 
     """ СТРАННИЦА О СТАТУСЕ ПЕРЕВОДОВ МЕЖДУ СВОИМИ СЧЕТАМИ. """
 
-    template_name = 'Transfer_done.html'
+    template_name = 'transfer_done.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -243,7 +248,7 @@ class TransfersHistoryView(View):
             user = request.user   
             Transfers = Transfer.objects.filter(Q(transaction_type='Transfer') & Q(outaccount__owner=user)).order_by('-datetime')
             return render(
-                template_name = 'Transfer_history.html',
+                template_name = 'transfer_history.html',
                 request=request,
                 context = {
                     'user': user,
@@ -258,7 +263,7 @@ class TransferAnyChoicePageView(View):
 
     """ СТРАННИЦА ВЫБОРА ПЕРЕВОДА ДЛЯ КЛИЕНТА КАСПИ. """
 
-    template_name = 'TransferAnyChoice.html'
+    template_name = 'transfer_any_choice.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -267,7 +272,7 @@ class TransferAnyBankAccountsViewByNumber(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ НА СЧЕТ ДРУГОГО КЛИЕНТА КАСПИ. """
 
-    template_name = 'TransferAnyBankAccounts1.html'
+    template_name = 'transfer_any_bank_accounts_1.html'
 
     def get(self, request):
         form = TransferAnyFormByNumber(user=request.user)
@@ -312,7 +317,7 @@ class TransferAnyBankAccountsViewByIBAN(View):
 
     """ СТРАННИЦА ПЕРЕВОДОВ НА СЧЕТ ДРУГОГО КЛИЕНТА КАСПИ. """
 
-    template_name = 'TransferAnyBankAccounts.html'
+    template_name = 'transfer_any_bank_accounts.html'
 
     def get(self, request):
         form = TransferAnyFormByIBAN(user=request.user)
@@ -357,7 +362,7 @@ class TransferAnyBankAccountsViewByIBAN(View):
 class UserInstsView(View):
 
     """ СТРАННИЦА РАССРОЧЕК ПОЛЬЗОВАТЕЛЯ. """
-    template_name = 'UserInsts.html'
+    template_name = 'user_insts.html'
 
     def get(self, request):
         user = request.user
