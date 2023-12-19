@@ -185,7 +185,7 @@ def ProductGenerator():
             name = i
         )
         print(f'Категория {i} создана')
-    for _ in range(200):
+    for _ in range(100):
         cat = Categoryes_generator()
         name = Product_generator(cat)
         category = Category.objects.get(name=cat)
